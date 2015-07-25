@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "auto_water", "auto_water\auto_water.cproj", "{83317BD8-2EA6-480E-B9B5-F8FC97261FEA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83317BD8-2EA6-480E-B9B5-F8FC97261FEA}.Debug|AVR.ActiveCfg = Debug|AVR
+		{83317BD8-2EA6-480E-B9B5-F8FC97261FEA}.Debug|AVR.Build.0 = Debug|AVR
+		{83317BD8-2EA6-480E-B9B5-F8FC97261FEA}.Release|AVR.ActiveCfg = Release|AVR
+		{83317BD8-2EA6-480E-B9B5-F8FC97261FEA}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
