@@ -1,0 +1,217 @@
+
+auto_water.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000bc  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .comment      00000030  00000000  00000000  00000110  2**0
+                  CONTENTS, READONLY
+  2 .debug_aranges 00000048  00000000  00000000  00000140  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   00000232  00000000  00000000  00000188  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 0000016b  00000000  00000000  000003ba  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   000001a8  00000000  00000000  00000525  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  00000074  00000000  00000000  000006d0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    000001aa  00000000  00000000  00000744  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    00000085  00000000  00000000  000008ee  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000038  00000000  00000000  00000973  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0e c0       	rjmp	.+28     	; 0x1e <__ctors_end>
+   2:	15 c0       	rjmp	.+42     	; 0x2e <__bad_interrupt>
+   4:	14 c0       	rjmp	.+40     	; 0x2e <__bad_interrupt>
+   6:	13 c0       	rjmp	.+38     	; 0x2e <__bad_interrupt>
+   8:	12 c0       	rjmp	.+36     	; 0x2e <__bad_interrupt>
+   a:	11 c0       	rjmp	.+34     	; 0x2e <__bad_interrupt>
+   c:	10 c0       	rjmp	.+32     	; 0x2e <__bad_interrupt>
+   e:	0f c0       	rjmp	.+30     	; 0x2e <__bad_interrupt>
+  10:	0e c0       	rjmp	.+28     	; 0x2e <__bad_interrupt>
+  12:	0d c0       	rjmp	.+26     	; 0x2e <__bad_interrupt>
+  14:	0c c0       	rjmp	.+24     	; 0x2e <__bad_interrupt>
+  16:	0b c0       	rjmp	.+22     	; 0x2e <__bad_interrupt>
+  18:	0a c0       	rjmp	.+20     	; 0x2e <__bad_interrupt>
+  1a:	09 c0       	rjmp	.+18     	; 0x2e <__bad_interrupt>
+  1c:	08 c0       	rjmp	.+16     	; 0x2e <__bad_interrupt>
+
+0000001e <__ctors_end>:
+  1e:	11 24       	eor	r1, r1
+  20:	1f be       	out	0x3f, r1	; 63
+  22:	cf e5       	ldi	r28, 0x5F	; 95
+  24:	d2 e0       	ldi	r29, 0x02	; 2
+  26:	de bf       	out	0x3e, r29	; 62
+  28:	cd bf       	out	0x3d, r28	; 61
+  2a:	1c d0       	rcall	.+56     	; 0x64 <main>
+  2c:	45 c0       	rjmp	.+138    	; 0xb8 <_exit>
+
+0000002e <__bad_interrupt>:
+  2e:	e8 cf       	rjmp	.-48     	; 0x0 <__vectors>
+
+00000030 <setup_adc>:
+#include <stdbool.h>
+
+void setup_adc()
+{
+	    // AREF = AVcc with Cap on Aref
+	    ADMUX = (1<<REFS0);
+  30:	80 e4       	ldi	r24, 0x40	; 64
+  32:	87 b9       	out	0x07, r24	; 7
+	    // ADC Enable and prescaler of 16 (1M/16=62.5K)
+	    ADCSRA = (1<<ADEN)|(1<<ADPS2);
+  34:	84 e8       	ldi	r24, 0x84	; 132
+  36:	86 b9       	out	0x06, r24	; 6
+  38:	08 95       	ret
+
+0000003a <adc_read>:
+}
+
+uint16_t adc_read(uint8_t ch)
+{
+	ch &= 0b00000011;
+	ADMUX = (ADMUX & 0xFC)|ch; // clears the bottom 2 bits before ORing
+  3a:	97 b1       	in	r25, 0x07	; 7
+	    ADCSRA = (1<<ADEN)|(1<<ADPS2);
+}
+
+uint16_t adc_read(uint8_t ch)
+{
+	ch &= 0b00000011;
+  3c:	83 70       	andi	r24, 0x03	; 3
+	ADMUX = (ADMUX & 0xFC)|ch; // clears the bottom 2 bits before ORing
+  3e:	9c 7f       	andi	r25, 0xFC	; 252
+  40:	98 2b       	or	r25, r24
+  42:	97 b9       	out	0x07, r25	; 7
+	// start single convertion
+	ADCSRA |= (1<<ADSC);
+  44:	36 9a       	sbi	0x06, 6	; 6
+	// wait for conversion to complete, ADSC becomes ’0? again
+	while(ADCSRA & (1<<ADSC));
+  46:	36 99       	sbic	0x06, 6	; 6
+  48:	fe cf       	rjmp	.-4      	; 0x46 <__SREG__+0x7>
+	return (ADC);
+  4a:	84 b1       	in	r24, 0x04	; 4
+  4c:	95 b1       	in	r25, 0x05	; 5
+}
+  4e:	08 95       	ret
+
+00000050 <get_pot_val>:
+
+uint16_t get_pot_val() { return adc_read(PIN_POT); }
+  50:	81 e0       	ldi	r24, 0x01	; 1
+  52:	f3 df       	rcall	.-26     	; 0x3a <adc_read>
+  54:	08 95       	ret
+
+00000056 <get_soil_val>:
+uint16_t get_soil_val() { return adc_read(PIN_SOIL); }
+  56:	83 e0       	ldi	r24, 0x03	; 3
+  58:	f0 df       	rcall	.-32     	; 0x3a <adc_read>
+  5a:	08 95       	ret
+
+0000005c <get_level>:
+
+bool get_level() 
+{ 
+	// If HIGH, we have no water
+	if (PINB & (1<<PIN_LEV)) 
+  5c:	86 b3       	in	r24, 0x16	; 22
+		return true; 
+	else
+		return false; 
+}
+  5e:	82 95       	swap	r24
+  60:	81 70       	andi	r24, 0x01	; 1
+  62:	08 95       	ret
+
+00000064 <main>:
+
+int main(void)
+{
+	// Start ADC settings
+	setup_adc();
+  64:	e5 df       	rcall	.-54     	; 0x30 <setup_adc>
+	// LED and PUMP as GPIO output and set to off
+	DDRB |= (1<<POUT_LED) | (1<<POUT_PUMP);
+  66:	87 b3       	in	r24, 0x17	; 23
+  68:	83 60       	ori	r24, 0x03	; 3
+  6a:	87 bb       	out	0x17, r24	; 23
+	PORTB &= ~(1<<POUT_LED);
+  6c:	c0 98       	cbi	0x18, 0	; 24
+	PORTB &= ~(1<<POUT_PUMP);
+  6e:	c1 98       	cbi	0x18, 1	; 24
+	// Level as input (start at HIGH)
+	DDRB &= ~(1<<PIN_LEV);
+  70:	bc 98       	cbi	0x17, 4	; 23
+	PORTB |= (1<<PIN_LEV);
+  72:	c4 9a       	sbi	0x18, 4	; 24
+	
+    while(1)
+    {
+		// Check if we have water on bucket
+		if (get_level())
+  74:	f3 df       	rcall	.-26     	; 0x5c <get_level>
+  76:	88 23       	and	r24, r24
+  78:	a1 f0       	breq	.+40     	; 0xa2 <main+0x3e>
+		{
+			// If yes: Close LED
+			PORTB &= ~(1<<POUT_LED);
+  7a:	c0 98       	cbi	0x18, 0	; 24
+			// Check if need to water soil and on/off pump
+			if (get_pot_val() > get_soil_val()) PORTB |= (1<<POUT_PUMP);
+  7c:	e9 df       	rcall	.-46     	; 0x50 <get_pot_val>
+  7e:	ec 01       	movw	r28, r24
+  80:	ea df       	rcall	.-44     	; 0x56 <get_soil_val>
+  82:	8c 17       	cp	r24, r28
+  84:	9d 07       	cpc	r25, r29
+  86:	10 f4       	brcc	.+4      	; 0x8c <main+0x28>
+  88:	c1 9a       	sbi	0x18, 1	; 24
+  8a:	01 c0       	rjmp	.+2      	; 0x8e <main+0x2a>
+			else PORTB &= ~(1<<POUT_PUMP);
+  8c:	c1 98       	cbi	0x18, 1	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  8e:	2f e3       	ldi	r18, 0x3F	; 63
+  90:	8d e0       	ldi	r24, 0x0D	; 13
+  92:	93 e0       	ldi	r25, 0x03	; 3
+  94:	21 50       	subi	r18, 0x01	; 1
+  96:	80 40       	sbci	r24, 0x00	; 0
+  98:	90 40       	sbci	r25, 0x00	; 0
+  9a:	e1 f7       	brne	.-8      	; 0x94 <main+0x30>
+  9c:	00 c0       	rjmp	.+0      	; 0x9e <main+0x3a>
+  9e:	00 00       	nop
+  a0:	e9 cf       	rjmp	.-46     	; 0x74 <main+0x10>
+			_delay_ms(LOOP_WAIT);
+		}
+		else
+		{
+			// LED on
+			PORTB |= (1<<POUT_LED);
+  a2:	c0 9a       	sbi	0x18, 0	; 24
+  a4:	2f e3       	ldi	r18, 0x3F	; 63
+  a6:	82 e4       	ldi	r24, 0x42	; 66
+  a8:	9f e0       	ldi	r25, 0x0F	; 15
+  aa:	21 50       	subi	r18, 0x01	; 1
+  ac:	80 40       	sbci	r24, 0x00	; 0
+  ae:	90 40       	sbci	r25, 0x00	; 0
+  b0:	e1 f7       	brne	.-8      	; 0xaa <main+0x46>
+  b2:	00 c0       	rjmp	.+0      	; 0xb4 <main+0x50>
+  b4:	00 00       	nop
+  b6:	de cf       	rjmp	.-68     	; 0x74 <main+0x10>
+
+000000b8 <_exit>:
+  b8:	f8 94       	cli
+
+000000ba <__stop_program>:
+  ba:	ff cf       	rjmp	.-2      	; 0xba <__stop_program>
