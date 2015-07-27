@@ -1,5 +1,7 @@
 Archive member included because of file (symbol)
 
+c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+                              auto_water.o (__udivmodhi4)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr25/crttn85.o (exit)
 
@@ -10,6 +12,20 @@ Discarded input sections
  .text          0x00000000        0x0 auto_water.o
  .data          0x00000000        0x0 auto_water.o
  .bss           0x00000000        0x0 auto_water.o
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.mul
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+ .text.libgcc.fixed
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
@@ -142,7 +158,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000       0xbc
+.text           0x00000000      0x110
  *(.vectors)
  .vectors       0x00000000       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr25/crttn85.o
                 0x00000000                __vector_default
@@ -213,27 +229,27 @@ END GROUP
                 0x00000030                . = ALIGN (0x2)
  *(.text.*)
  .text.setup_adc
-                0x00000030        0xa auto_water.o
+                0x00000030        0x8 auto_water.o
                 0x00000030                setup_adc
  .text.adc_read
-                0x0000003a       0x16 auto_water.o
-                0x0000003a                adc_read
- .text.get_pot_val
-                0x00000050        0x6 auto_water.o
-                0x00000050                get_pot_val
- .text.get_soil_val
-                0x00000056        0x6 auto_water.o
-                0x00000056                get_soil_val
+                0x00000038       0x16 auto_water.o
+                0x00000038                adc_read
+ .text.get_adc_val
+                0x0000004e       0x30 auto_water.o
+                0x0000004e                get_adc_val
  .text.get_level
-                0x0000005c        0x8 auto_water.o
-                0x0000005c                get_level
- .text.main     0x00000064       0x54 auto_water.o
-                0x00000064                main
-                0x000000b8                . = ALIGN (0x2)
+                0x0000007e        0xc auto_water.o
+                0x0000007e                get_level
+ .text.main     0x0000008a       0x5a auto_water.o
+                0x0000008a                main
+ .text.libgcc.div
+                0x000000e4       0x28 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_udivmodhi4.o)
+                0x000000e4                __udivmodhi4
+                0x0000010c                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000000b8        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
-                0x000000b8                _exit
-                0x000000b8                exit
+ .fini9         0x0000010c        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
+                0x0000010c                _exit
+                0x0000010c                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -252,11 +268,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000000b8        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
+ .fini0         0x0000010c        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr25\libgcc.a(_exit.o)
  *(.fini0)
-                0x000000bc                _etext = .
+                0x00000110                _etext = .
 
-.data           0x00800060        0x0 load address 0x000000bc
+.data           0x00800060        0x0 load address 0x00000110
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -273,8 +289,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x00800060                PROVIDE (__bss_end, .)
-                0x000000bc                __data_load_start = LOADADDR (.data)
-                0x000000bc                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000110                __data_load_start = LOADADDR (.data)
+                0x00000110                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800060        0x0
                 0x00800060                PROVIDE (__noinit_start, .)
@@ -340,38 +356,38 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0x48
+.debug_aranges  0x00000000       0x40
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x48 auto_water.o
+                0x00000000       0x40 auto_water.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x232
+.debug_info     0x00000000      0x24c
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x232 auto_water.o
+ .debug_info    0x00000000      0x24c auto_water.o
 
-.debug_abbrev   0x00000000      0x16b
+.debug_abbrev   0x00000000      0x1a7
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x16b auto_water.o
+ .debug_abbrev  0x00000000      0x1a7 auto_water.o
 
-.debug_line     0x00000000      0x1a8
+.debug_line     0x00000000      0x19f
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x1a8 auto_water.o
+ .debug_line    0x00000000      0x19f auto_water.o
 
-.debug_frame    0x00000000       0x74
+.debug_frame    0x00000000       0x78
  *(.debug_frame)
- .debug_frame   0x00000000       0x74 auto_water.o
+ .debug_frame   0x00000000       0x78 auto_water.o
 
-.debug_str      0x00000000      0x1aa
+.debug_str      0x00000000      0x1ae
  *(.debug_str)
- .debug_str     0x00000000      0x1aa auto_water.o
-                                0x1de (size before relaxing)
+ .debug_str     0x00000000      0x1ae auto_water.o
+                                0x1e2 (size before relaxing)
 
-.debug_loc      0x00000000       0x85
+.debug_loc      0x00000000      0x15f
  *(.debug_loc)
- .debug_loc     0x00000000       0x85 auto_water.o
+ .debug_loc     0x00000000      0x15f auto_water.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -391,9 +407,9 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x38
+.debug_ranges   0x00000000       0x30
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x38 auto_water.o
+ .debug_ranges  0x00000000       0x30 auto_water.o
 
 .debug_macro
  *(.debug_macro)

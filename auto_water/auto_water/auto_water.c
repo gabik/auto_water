@@ -38,16 +38,18 @@
 #define NO_WATER_WAIT 5000
 #define LOOP_WAIT 1000
 
+#define ADC_READ_COUNTS 10
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdbool.h>
 
 void setup_adc()
 {
-	    // AREF = AVcc with Cap on Aref
-	    ADMUX = (1<<REFS0);
+	    // AREF = AVcc
+	    //ADMUX = 0;
 	    // ADC Enable and prescaler of 16 (1M/16=62.5K)
-	    ADCSRA = (1<<ADEN)|(1<<ADPS2);
+	    ADCSRA |= (1<<ADEN)|(1<<ADPS2);
 }
 
 uint16_t adc_read(uint8_t ch)
@@ -61,16 +63,20 @@ uint16_t adc_read(uint8_t ch)
 	return (ADC);
 }
 
-uint16_t get_pot_val() { return adc_read(PIN_POT); }
-uint16_t get_soil_val() { return adc_read(PIN_SOIL); }
+uint16_t get_adc_val(uint8_t adc_id)
+{ 
+	uint16_t total_adc = 0;
+	for (uint8_t i=0 ; i<ADC_READ_COUNTS; i++) { total_adc += adc_read(adc_id); }
+	return (uint16_t)(total_adc / ADC_READ_COUNTS);
+}
 
 bool get_level() 
 { 
 	// If HIGH, we have no water
 	if (PINB & (1<<PIN_LEV)) 
-		return true; 
-	else
 		return false; 
+	else
+		return true; 
 }
 
 int main(void)
@@ -93,15 +99,17 @@ int main(void)
 			// If yes: Close LED
 			PORTB &= ~(1<<POUT_LED);
 			// Check if need to water soil and on/off pump
-			if (get_pot_val() > get_soil_val()) PORTB |= (1<<POUT_PUMP);
+			if (get_adc_val(PIN_POT) > get_adc_val(PIN_SOIL)) PORTB |= (1<<POUT_PUMP);
 			else PORTB &= ~(1<<POUT_PUMP);
-			// wait 1 sec
+			// wait LOOP sec
 			_delay_ms(LOOP_WAIT);
 		}
 		else
 		{
 			// LED on
 			PORTB |= (1<<POUT_LED);
+			// PUMP off
+			PORTB &= ~(1<<POUT_PUMP);
 			// Wait N seconds;
 			_delay_ms(NO_WATER_WAIT);
 		}
