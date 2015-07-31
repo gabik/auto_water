@@ -454,7 +454,7 @@ void spi_init()
  262:	81 e5       	ldi	r24, 0x51	; 81
  264:	8c bd       	out	0x2c, r24	; 44
 	(1<<MSTR)|              // Master/Slave select
-	(0<<SPR1)|(1<<SPR0)|    // SPI Clock Rate
+	(0<<SPR1)|(1<<SPR0)|    // SPI Clock Rate 1MHz/16
 	(0<<CPOL)|              // Clock Polarity (0:SCK low / 1:SCK hi when idle)
 	(0<<CPHA));             // Clock Phase (0:leading / 1:trailing edge sampling)
 
