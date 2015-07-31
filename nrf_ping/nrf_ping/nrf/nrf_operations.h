@@ -10,9 +10,13 @@
 #ifndef NRF_OPERATIONS_H_
 #define NRF_OPERATIONS_H_
 
+#include <avr/io.h>
+#include "nrf.h"
+#include "nrf_const.h"
+
 #define DATA_PAYLOAD (nrf_PAYLOAD - 2)
 
-void nrf_send(uint8_t id, uint8_t * data)
-void nrf_get(uint8_t my_id, uint8_t * data)
+void nrf_send(uint8_t id, uint8_t * data);
+uint8_t nrf_get(uint8_t my_id, uint8_t * data);
 
 #endif /* NRF_OPERATIONS_H_ */

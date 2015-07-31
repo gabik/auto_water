@@ -96,6 +96,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="nrf\nrf.c">
       <SubType>compile</SubType>
     </Compile>
@@ -111,11 +114,35 @@
     <Compile Include="nrf\nrf_operations.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="nrf_ping.c">
+    <Compile Include="rx\nrf_ping_RX.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="rx\nrf_ping_RX.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi\spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="spi\spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="tx\nrf_ping_TX.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="tx\nrf_ping_TX.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="tx\tx.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="tx\tx.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="rx" />
+    <Folder Include="spi" />
+    <Folder Include="tx" />
     <Folder Include="nrf" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

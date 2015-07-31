@@ -7,16 +7,16 @@
  *  Author: Gabi Kazav
  */ 
 
+#include "../spi/spi.h"
 #include "nrf.h"
 #include "nrf_const.h"
-#include "spi.h"
 #include <avr/io.h>
 
 // Defines for setting the NRF registers for transmitting or receiving mode
 #define TX_POWERUP nrf_config_register((1<<PWR_UP) | (0<<PRIM_RX))
 #define RX_POWERUP nrf_config_register((1<<PWR_UP) | (1<<PRIM_RX))
 #define POWERDN    nrf_config_register(0)
-#define RESET_STT  nrf_write_register(STATUS, ((1<<RX_DR) | (1<<TX_DS) | (1<<MAX_RT)), 1)
+#define RESET_STT  nrf_write_register_1(STATUS, ((1<<RX_DR) | (1<<TX_DS) | (1<<MAX_RT)))
 
 // Flag which denotes transmitting mode
 volatile uint8_t PTX;
@@ -38,16 +38,16 @@ void nrf_config()
 // Sets the important registers in the NRF module and powers the module
 // TODO: setup SETUP_RETR=0, 
 {
-	uint8_t RX_PIPE[5] = 0xf0f0f0f0f0;
-	uint8_t TX_PIPE[5] = 0xf1f1f1f1f1;
-	nrf_write_register(RF_CH, nrf_CH, 1);				// Set RF Channel
-	nrf_write_register(RX_PW_P0, nrf_PAYLOAD, 1);		// Set Bytes payload
-	nrf_write_register(RF_SETUP, (0b11<<RF_PWR), 1);	// Set 0dBm
-	nrf_write_register(EN_AA, 0x00, 1);					// Disable Auto_Ack
-	nrf_write_register(EN_RXADDR, (1<<ERX_P0), 1);		// Enable only data pipe 0 for RX
-	nrf_write_register(SETUP_AW, (0b11<<AW), 1);		// Enable 5 Byte addresses
+	uint8_t RX_PIPE[5] = {0xf0, 0xf0, 0xf0, 0xf0, 0xf0};
+	uint8_t TX_PIPE[5] = {0xf1, 0xf1, 0xf1, 0xf1, 0xf1};
+	nrf_write_register_1(RF_CH, nrf_CH);				// Set RF Channel
+	nrf_write_register_1(RX_PW_P0, nrf_PAYLOAD);		// Set Bytes payload
+	nrf_write_register_1(RF_SETUP, (0b11<<RF_PWR));	// Set 0dBm
+	nrf_write_register_1(EN_AA, 0x00);					// Disable Auto_Ack
+	nrf_write_register_1(EN_RXADDR, (1<<ERX_P0));		// Enable only data pipe 0 for RX
+	nrf_write_register_1(SETUP_AW, (0b11<<AW));		// Enable 5 Byte addresses
 	nrf_write_register(RX_ADDR_P0, RX_PIPE, 5);			// Set RX pipe
-	nrf_write_register(TX_ADDR, TX_PIPE, 5)				// Set TX pipe
+	nrf_write_register(TX_ADDR, TX_PIPE, 5);			// Set TX pipe
 	RESET_STT;											// Reset all IRQ flags on Status
 	nrf_flush();										// Flush RX and TX FIFO's
 
@@ -86,7 +86,7 @@ extern uint8_t nrf_data_ready()
 void nrf_config_register(uint8_t value)
 // OR with nrf_CONFIG const and write CONFIG register new value
 {
-	nrf_write_register(CONFIG, nrf_CONFIG | value, 1);
+	nrf_write_register_1(CONFIG, nrf_CONFIG | value);
 }
 
 void nrf_read_register(uint8_t reg, uint8_t * value, uint8_t len)
@@ -105,6 +105,12 @@ void nrf_write_register(uint8_t reg, uint8_t * value, uint8_t len)
 	spi_fast_shift(W_REGISTER | (REGISTER_MASK & reg));
 	spi_transmit_sync(value,len);
 	nrf_CSN_hi;
+}
+
+void nrf_write_register_1(uint8_t reg, uint8_t value)
+{
+	uint8_t data[1] = {value};
+	nrf_write_register(reg, data, 1);
 }
 
 void nrf_flush()

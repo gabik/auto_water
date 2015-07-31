@@ -33,14 +33,21 @@ LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
+../rx \
+../spi \
+../tx \
 ../nrf
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../main.c \
 ../nrf/nrf.c \
 ../nrf/nrf_operations.c \
-../nrf_ping.c
+../rx/nrf_ping_RX.c \
+../spi/spi.c \
+../tx/nrf_ping_TX.c \
+../tx/tx.c
 
 
 PREPROCESSING_SRCS += 
@@ -50,24 +57,40 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+main.o \
 nrf/nrf.o \
 nrf/nrf_operations.o \
-nrf_ping.o
+rx/nrf_ping_RX.o \
+spi/spi.o \
+tx/nrf_ping_TX.o \
+tx/tx.o
 
 OBJS_AS_ARGS +=  \
+main.o \
 nrf/nrf.o \
 nrf/nrf_operations.o \
-nrf_ping.o
+rx/nrf_ping_RX.o \
+spi/spi.o \
+tx/nrf_ping_TX.o \
+tx/tx.o
 
 C_DEPS +=  \
+main.d \
 nrf/nrf.d \
 nrf/nrf_operations.d \
-nrf_ping.d
+rx/nrf_ping_RX.d \
+spi/spi.d \
+tx/nrf_ping_TX.d \
+tx/tx.d
 
 C_DEPS_AS_ARGS +=  \
+main.d \
 nrf/nrf.d \
 nrf/nrf_operations.d \
-nrf_ping.d
+rx/nrf_ping_RX.d \
+spi/spi.d \
+tx/nrf_ping_TX.d \
+tx/tx.d
 
 OUTPUT_FILE_PATH +=nrf_ping.elf
 
@@ -90,6 +113,21 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
+
+
+
+
+./%.o: .././%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 nrf/%.o: ../nrf/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
@@ -97,7 +135,21 @@ nrf/%.o: ../nrf/%.c
 	@echo Finished building: $<
 	
 
-./%.o: .././%.c
+rx/%.o: ../rx/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+spi/%.o: ../spi/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+tx/%.o: ../tx/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -18,10 +18,6 @@
 #define nrf_PAYLOAD    4 // in Bytes (id, 2xdata, cksum)
 #define nrf_CONFIG     ((1<<MASK_MAX_RT) | (1<<MASK_RX_DR) | (MASK_TX_DS)) // Disabling IRQ
 
-// NRF pipes
-#define TX_PIPE 0x
-
-
 // Pin definitions for chip select and chip enabled of the MiRF module
 #define NRF_PORT	PORTB
 #define NRF_DDR		DDRB
@@ -37,13 +33,15 @@
 // Public functions
 extern void		nrf_init();
 extern void		nrf_config();
+extern void		nrf_flush();
 extern void		nrf_send_raw(uint8_t * value);
 extern void		nrf_set_RADDR(uint8_t * adr);
 extern void		nrf_set_TADDR(uint8_t * adr);
 extern uint8_t	nrf_data_ready();
-extern void		nrf_get_data(uint8_t * data);
+extern void		nrf_get_raw(uint8_t * data);
 extern void		nrf_config_register(uint8_t value);
 extern void		nrf_read_register(uint8_t reg, uint8_t * value, uint8_t len);
 extern void		nrf_write_register(uint8_t reg, uint8_t * value, uint8_t len);
+extern void		nrf_write_register_1(uint8_t reg, uint8_t value);
 
 #endif /* NRF_H_ */

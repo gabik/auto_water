@@ -7,7 +7,7 @@
  *  Author: Gabi Kazav
  */ 
 
-#include "nrf/nrf.h"
+#include "nrf.h"
 #include "nrf_const.h"
 #include "nrf_operations.h"
 #include <avr/io.h>
@@ -27,8 +27,10 @@ void nrf_send(uint8_t id, uint8_t * data)
 	nrf_send_raw(raw);
 }
 
-void nrf_get(uint8_t my_id, uint8_t * data)
+uint8_t nrf_get(uint8_t my_id, uint8_t * data)
 {
+	uint8_t valid = 0;
+	
 	// Reset data to 0
 	for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) { data[i] = 0; }
 	
@@ -44,7 +46,9 @@ void nrf_get(uint8_t my_id, uint8_t * data)
 			if (xor == raw[nrf_PAYLOAD - 1])
 			{
 				for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) { data[i] = raw[i+1]; }			
+				valid = 1;
 			}
 		}
 	}
+	return valid;
 }
