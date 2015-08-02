@@ -19,14 +19,13 @@
 #define MY_ID 1 // Reciever #1
 	
 uint16_t count;
+uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
 
 void setup_rx()
 {
-// 	LED_DDR |= (1<<LED_PIN);
-// 	LED_PORT &= ~(LED_PIN);
-// 	nrf_init();
-// 	_delay_ms(10);
-// 	nrf_config();
+ 	nrf_init();
+ 	_delay_ms(10);
+ 	nrf_config(0);
 	init_button();
 	led_screen_init();
 	count = 0;
@@ -34,11 +33,10 @@ void setup_rx()
 
 void loop_rx()
 {
-	//uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
-	//while (!nrf_get(MY_ID, data)) {write_to_led(count, 0);} // Wait till we got data
-	while (!check_button_click()) {write_to_led(count, 0);} // Wait till we got data
-	//if (data[0]) count = data[0];
-	count++;
+	while (!nrf_get(MY_ID, data)) {write_to_led(count, 0);} // Wait till we got data
+	//while (!check_button_click()) {write_to_led(count, 0);} // Wait till we got data
+	if (data[0]) count = data[0];
+	//count++;
 }
 
 int main_rx(void) { setup_rx(); while(1) loop_rx(); }

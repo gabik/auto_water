@@ -32,7 +32,7 @@
 
 // Public functions
 extern void		nrf_init();
-extern void		nrf_config();
+extern void		nrf_config(uint8_t is_tx);
 extern void		nrf_flush();
 extern void		nrf_send_raw(uint8_t * value);
 extern void		nrf_set_RADDR(uint8_t * adr);

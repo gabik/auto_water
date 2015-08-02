@@ -10,13 +10,13 @@
  * NRF SPI = AVR SPI
  * NRF CE  = PB0
  * NRF CSN = PB1 
+ * BTN     = PB6
  *
  * -- PORTC ---
  * LED SCREEN LED0 = PC5
  * LED SCREEN LED1 = PC4
  * LED SCREEN LED2 = PC3
  * LED SCREEN LED3 = PC2
- * BTN INPUT       = PC1 ?
  * LED STATUS      = PC0 ?
  *
  * -- PORTD ---
@@ -35,4 +35,4 @@
 
 #define F_CPU 1000000L
 
-int main(void) { return main_rx(); }
+int main(void) { return main_tx(); }

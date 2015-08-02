@@ -16,21 +16,29 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+uint8_t clck_count;
+
 void setup_tx()
 {
-	BTN_DDR &= ~(1<<BTN_PIN); // set BTN as input
-	BTN_PORT |= (1<<BTN_PIN); // pull up
+	clck_count = 0;
+	init_button();
 	nrf_init();
 	_delay_ms(10);
-	nrf_config();
+	nrf_config(1);
+	DDRD |= (1<<PD0);
+	PORTD &= ~(1<<PD0);
 }
 
-void loop_tx(uint8_t * clck_count)
+void loop_tx()
 {
 	// uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
-	while (!check_button_click(BTN_PPIN, BTN_PIN)) {} // Loop till btn clicked
-	send_counter(clck_count);
-	_delay_ms(500);
+	if (check_button_click())
+	{
+		PORTD |= (1<<PD0);
+		send_counter(clck_count++);
+		_delay_ms(500);
+		PORTD &= ~(1<<PD0);
+	}
 }
 
-int main_tx(void) { uint8_t clck_count = 0; setup_tx(); while(1) loop_tx(&clck_count); }
+int main_tx(void) {setup_tx(); while(1) loop_tx(); }

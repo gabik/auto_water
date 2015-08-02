@@ -11,6 +11,7 @@
 #include "nrf.h"
 #include "nrf_const.h"
 #include <avr/io.h>
+#include <avr/delay.h>
 
 // Defines for setting the NRF registers for transmitting or receiving mode
 #define TX_POWERUP nrf_config_register((1<<PWR_UP) | (0<<PRIM_RX))
@@ -34,7 +35,7 @@ void nrf_init()
 }
 
 
-void nrf_config()
+void nrf_config(uint8_t is_tx)
 // Sets the important registers in the NRF module and powers the module
 // TODO: setup SETUP_RETR=0, 
 {
@@ -46,8 +47,14 @@ void nrf_config()
 	nrf_write_register_1(EN_AA, 0x00);					// Disable Auto_Ack
 	nrf_write_register_1(EN_RXADDR, (1<<ERX_P0));		// Enable only data pipe 0 for RX
 	nrf_write_register_1(SETUP_AW, (0b11<<AW));		// Enable 5 Byte addresses
-	nrf_write_register(RX_ADDR_P0, RX_PIPE, 5);			// Set RX pipe
-	nrf_write_register(TX_ADDR, TX_PIPE, 5);			// Set TX pipe
+	if (is_tx)
+	{
+		nrf_write_register(RX_ADDR_P0, RX_PIPE, 5);			// Set RX pipe
+		nrf_write_register(TX_ADDR, TX_PIPE, 5);			// Set TX pipe
+	} else {
+		nrf_write_register(TX_ADDR, RX_PIPE, 5);			// Set RX pipe
+		nrf_write_register(RX_ADDR_P0, TX_PIPE, 5);			// Set TX pipe
+	}
 	RESET_STT;											// Reset all IRQ flags on Status
 	nrf_flush();										// Flush RX and TX FIFO's
 
@@ -131,9 +138,11 @@ void nrf_send_raw(uint8_t * value)
 {
 	while (PTX) {}                  // Wait for rx mode
 
-	nrf_CE_lo;						// Stop listening
 	PTX = 1;                        // Set to transmitter mode
 	TX_POWERUP;                     // Go to TX mode
+	RESET_STT;
+	_delay_us(150);
+	//nrf_CE_lo;						// Stop listening
 	
 	nrf_CSN_lo;                    // Pull down chip select
 	spi_fast_shift( FLUSH_TX );     // Write cmd to flush tx fifo
@@ -145,9 +154,14 @@ void nrf_send_raw(uint8_t * value)
 	nrf_CSN_hi;                    // Pull up chip select
 	
 	nrf_CE_hi;                     // Start transmission
+	_delay_us(15);
+	nrf_CE_lo;						// Stop listening
 	
 	// Back to Listening
+	PTX = 0;
 	RX_POWERUP;
+	nrf_CSN_hi;
+	_delay_us(130);
 }
 
 void nrf_get_raw(uint8_t * data)
@@ -161,7 +175,7 @@ void nrf_get_raw(uint8_t * data)
 		data[i] = cur_data;
 	}
 	nrf_CSN_hi;
-	RESET_STT;
+	RESET_STT;	
 }
 
 /*
