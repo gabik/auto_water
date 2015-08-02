@@ -11,6 +11,7 @@
 
 #include "../nrf/nrf_operations.h"
 #include "tx.h"
+#include "../misc/misc.h"
 #include "nrf_ping_TX.h"
 #include <avr/io.h>
 #include <util/delay.h>

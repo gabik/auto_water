@@ -33,6 +33,8 @@ LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
 SUBDIRS :=  \
+../led_screen \
+../misc \
 ../rx \
 ../spi \
 ../tx \
@@ -41,7 +43,9 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../led_screen/led_screen.c \
 ../main.c \
+../misc/misc.c \
 ../nrf/nrf.c \
 ../nrf/nrf_operations.c \
 ../rx/nrf_ping_RX.c \
@@ -57,7 +61,9 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+led_screen/led_screen.o \
 main.o \
+misc/misc.o \
 nrf/nrf.o \
 nrf/nrf_operations.o \
 rx/nrf_ping_RX.o \
@@ -66,7 +72,9 @@ tx/nrf_ping_TX.o \
 tx/tx.o
 
 OBJS_AS_ARGS +=  \
+led_screen/led_screen.o \
 main.o \
+misc/misc.o \
 nrf/nrf.o \
 nrf/nrf_operations.o \
 rx/nrf_ping_RX.o \
@@ -75,7 +83,9 @@ tx/nrf_ping_TX.o \
 tx/tx.o
 
 C_DEPS +=  \
+led_screen/led_screen.d \
 main.d \
+misc/misc.d \
 nrf/nrf.d \
 nrf/nrf_operations.d \
 rx/nrf_ping_RX.d \
@@ -84,7 +94,9 @@ tx/nrf_ping_TX.d \
 tx/tx.d
 
 C_DEPS_AS_ARGS +=  \
+led_screen/led_screen.d \
 main.d \
+misc/misc.d \
 nrf/nrf.d \
 nrf/nrf_operations.d \
 rx/nrf_ping_RX.d \
@@ -121,7 +133,25 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
+
+
+led_screen/%.o: ../led_screen/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 ./%.o: .././%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.8.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+misc/%.o: ../misc/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.8.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega328p -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

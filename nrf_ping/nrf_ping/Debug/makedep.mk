@@ -2,7 +2,11 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+led_screen\led_screen.c
+
 main.c
+
+misc\misc.c
 
 nrf\nrf.c
 

@@ -14,10 +14,8 @@
 #define BTN_DDR		DDRB
 #define BTN_PIN		PB2
 
-#define MIN_COUNT_PRESS 10
 #define MY_ID 0 // TX module
 
-uint8_t check_button_click(uint8_t port, uint8_t pin);
 uint8_t send_counter(uint8_t * clck_count);
 
 #endif /* TX_H_ */

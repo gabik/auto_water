@@ -96,7 +96,19 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="led_screen\led_screen.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="led_screen\led_screen.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="misc\misc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="misc\misc.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="nrf\nrf.c">
@@ -140,6 +152,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="led_screen" />
+    <Folder Include="misc" />
     <Folder Include="rx" />
     <Folder Include="spi" />
     <Folder Include="tx" />
