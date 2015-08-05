@@ -7,11 +7,13 @@
  *  Author: Gabi Kazav
  */ 
 
+#define F_CPU 1000000L
+
 #include "../spi/spi.h"
 #include "nrf.h"
 #include "nrf_const.h"
 #include <avr/io.h>
-#include <avr/delay.h>
+#include <util/delay.h>
 
 // Defines for setting the NRF registers for transmitting or receiving mode
 #define TX_POWERUP nrf_config_register((1<<PWR_UP) | (0<<PRIM_RX))
@@ -27,11 +29,12 @@ void nrf_init()
 {
 	// Define CSN and CE as Output and set them to default
 	NRF_DDR |= ((1<<CSN)|(1<<CE));
-	nrf_CE_lo;
-	nrf_CSN_hi;
 	
 	// Initialize spi module
 	spi_init();
+	
+	nrf_CE_lo;
+	nrf_CSN_hi;
 }
 
 
@@ -41,12 +44,13 @@ void nrf_config(uint8_t is_tx)
 {
 	uint8_t RX_PIPE[5] = {0xf0, 0xf0, 0xf0, 0xf0, 0xf0};
 	uint8_t TX_PIPE[5] = {0xf1, 0xf1, 0xf1, 0xf1, 0xf1};
+	nrf_write_register_1(SETUP_RETR, 0);
 	nrf_write_register_1(RF_CH, nrf_CH);				// Set RF Channel
 	nrf_write_register_1(RX_PW_P0, nrf_PAYLOAD);		// Set Bytes payload
-	nrf_write_register_1(RF_SETUP, (0b11<<RF_PWR));	// Set 0dBm
+	nrf_write_register_1(RF_SETUP, (0b11<<RF_PWR));		// Set 0dBm and 1MBps
 	nrf_write_register_1(EN_AA, 0x00);					// Disable Auto_Ack
 	nrf_write_register_1(EN_RXADDR, (1<<ERX_P0));		// Enable only data pipe 0 for RX
-	nrf_write_register_1(SETUP_AW, (0b11<<AW));		// Enable 5 Byte addresses
+	nrf_write_register_1(SETUP_AW, (0b11<<AW));			// Enable 5 Byte addresses
 	if (is_tx)
 	{
 		nrf_write_register(RX_ADDR_P0, RX_PIPE, 5);			// Set RX pipe
@@ -99,9 +103,14 @@ void nrf_config_register(uint8_t value)
 void nrf_read_register(uint8_t reg, uint8_t * value, uint8_t len)
 // Reads an array of bytes from the given start position in the NRF registers.
 {
+	for (uint8_t i=0; i< len ; i++) value[i] = NOP;
+	_delay_us(10);
 	nrf_CSN_lo;
+	_delay_us(10);	
 	spi_fast_shift(R_REGISTER | (REGISTER_MASK & reg));
+	_delay_us(10);	
 	spi_transfer_sync(value, value, len);
+	_delay_us(10);	
 	nrf_CSN_hi;
 }
 
@@ -152,11 +161,7 @@ void nrf_send_raw(uint8_t * value)
 	spi_fast_shift( W_TX_PAYLOAD ); // Write cmd to write payload
 	spi_transmit_sync(value,nrf_PAYLOAD);   // Write payload
 	nrf_CSN_hi;                    // Pull up chip select
-	
-	nrf_CE_hi;                     // Start transmission
-	_delay_us(15);
-	nrf_CE_lo;						// Stop listening
-	
+	nrf_CE_hi;                     // Start transmission	
 	// Back to Listening
 	PTX = 0;
 	RX_POWERUP;
@@ -166,14 +171,10 @@ void nrf_send_raw(uint8_t * value)
 
 void nrf_get_raw(uint8_t * data)
 {
-	uint8_t cur_data;
+	//uint8_t cur_data;
 	nrf_CSN_lo;
 	spi_fast_shift(R_RX_PAYLOAD);
-	for (uint8_t i=0 ; i<nrf_PAYLOAD ; i++) 
-	{ 
-		cur_data = spi_fast_shift(NOP);
-		data[i] = cur_data;
-	}
+	spi_transfer_sync(data, data, nrf_PAYLOAD);   // read payload
 	nrf_CSN_hi;
 	RESET_STT;	
 }

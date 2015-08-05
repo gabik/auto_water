@@ -13,6 +13,7 @@
 #include "tx.h"
 #include "../misc/misc.h"
 #include "nrf_ping_TX.h"
+#include "../led_screen/led_screen.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -25,19 +26,38 @@ void setup_tx()
 	nrf_init();
 	_delay_ms(10);
 	nrf_config(1);
-	DDRD |= (1<<PD0);
-	PORTD &= ~(1<<PD0);
+	DDRC |= (1<<PC0);
+	PORTC &= ~(1<<PC0);
+	led_screen_init();
+	uint8_t reg_val1, val1=0, val2=0;
+	uint8_t reg_val5[5];
+	for (uint8_t i=0 ; i<=0x17 ; i+=2)
+	{
+		for (uint8_t j = i ; j<i+2 ; j++)
+		{
+			poweroff_led();
+			if (j == 0x0A || j == 0x0B || j == 0x10)
+			{
+				nrf_read_register(j, reg_val5, 5) ;
+				reg_val1 = reg_val5[4];
+			}
+			else
+			nrf_read_register(j, &reg_val1, 1);
+			if (j==i) val1=reg_val1;
+			else val2=reg_val1;
+		}
+		write_to_led_hex(val1, val2, 400);
+		poweroff_led();
+	}
 }
+
 
 void loop_tx()
 {
 	// uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
 	if (check_button_click())
 	{
-		PORTD |= (1<<PD0);
-		send_counter(clck_count++);
-		_delay_ms(500);
-		PORTD &= ~(1<<PD0);
+		send_counter(0xff);
 	}
 }
 

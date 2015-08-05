@@ -35,6 +35,7 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../led_screen \
 ../misc \
+../old_libs \
 ../rx \
 ../spi \
 ../tx \

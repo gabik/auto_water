@@ -50,7 +50,17 @@
 #define DG7 ~((1<<ASEG)|(0<<BSEG)|(0<<CSEG)|(1<<DSEG)|(0<<ESEG)|(0<<FSEG)|(1<<GSEG)|(0<<HSEG))
 #define DG8 ~((1<<ASEG)|(1<<BSEG)|(1<<CSEG)|(1<<DSEG)|(1<<ESEG)|(1<<FSEG)|(1<<GSEG)|(0<<HSEG))
 #define DG9 ~((1<<ASEG)|(1<<BSEG)|(1<<CSEG)|(1<<DSEG)|(0<<ESEG)|(1<<FSEG)|(1<<GSEG)|(0<<HSEG))
+#define DGa ~((1<<ASEG)|(1<<BSEG)|(1<<CSEG)|(1<<DSEG)|(1<<ESEG)|(0<<FSEG)|(1<<GSEG)|(0<<HSEG))
+#define DGb ~((0<<ASEG)|(1<<BSEG)|(1<<CSEG)|(0<<DSEG)|(1<<ESEG)|(1<<FSEG)|(1<<GSEG)|(0<<HSEG))
+#define DGc ~((1<<ASEG)|(1<<BSEG)|(0<<CSEG)|(0<<DSEG)|(1<<ESEG)|(1<<FSEG)|(0<<GSEG)|(0<<HSEG))
+#define DGd ~((0<<ASEG)|(0<<BSEG)|(1<<CSEG)|(1<<DSEG)|(1<<ESEG)|(1<<FSEG)|(1<<GSEG)|(0<<HSEG))
+#define DGe ~((1<<ASEG)|(1<<BSEG)|(1<<CSEG)|(0<<DSEG)|(1<<ESEG)|(1<<FSEG)|(0<<GSEG)|(0<<HSEG))
+#define DGf ~((1<<ASEG)|(1<<BSEG)|(1<<CSEG)|(0<<DSEG)|(1<<ESEG)|(0<<FSEG)|(0<<GSEG)|(0<<HSEG))
+#define DGS ~((0<<ASEG)|(0<<BSEG)|(0<<CSEG)|(0<<DSEG)|(0<<ESEG)|(1<<FSEG)|(0<<GSEG)|(1<<HSEG))
+#define DGx ~((0<<ASEG)|(0<<BSEG)|(0<<CSEG)|(0<<DSEG)|(0<<ESEG)|(0<<FSEG)|(0<<GSEG)|(1<<HSEG))
 
+
+void write_to_led_hex(uint8_t hex1, uint8_t hex2, uint16_t loop);
 void led_screen_init();
 void write_to_led(uint16_t num, uint8_t digit);
 void devide_4_digits(uint16_t num, uint8_t * d);

@@ -7,10 +7,14 @@
  *  Author: Gabi Kazav
  */ 
 
+#define F_CPU 1000000L
+
 #include "nrf.h"
 #include "nrf_const.h"
 #include "nrf_operations.h"
 #include <avr/io.h>
+#include <util/delay.h>
+#include "../led_screen/led_screen.h"
 
 void nrf_send(uint8_t id, uint8_t * data)
 {
@@ -24,6 +28,8 @@ void nrf_send(uint8_t id, uint8_t * data)
 	for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) { raw[i+1] = data[i]; }
 	raw[nrf_PAYLOAD - 1] = xor;
 	
+	write_to_led_hex(raw[0], raw[1], 500);
+	write_to_led_hex(raw[2], raw[3], 500);	
 	nrf_send_raw(raw);
 }
 
@@ -39,6 +45,8 @@ uint8_t nrf_get(uint8_t my_id, uint8_t * data)
 	{
 		uint8_t raw[nrf_PAYLOAD];
 		nrf_get_raw(raw);
+		write_to_led_hex(raw[0], raw[1], 500);
+		write_to_led_hex(raw[2], raw[3], 500);
 		if (raw[0] == my_id)
 		{
 			uint8_t xor = my_id;

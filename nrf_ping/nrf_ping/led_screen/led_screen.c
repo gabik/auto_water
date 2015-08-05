@@ -5,13 +5,15 @@
  *  Author: gabi
  */ 
 
+#define F_CPU 1000000L
+
 #include "led_screen.h"
 #include <avr/io.h>
 #include <avr/delay.h>
 
-uint8_t digits[10] = {DG0, DG1, DG2, DG3, DG4, DG5, DG6, DG7, DG8, DG9};
+uint8_t digits[16] = {DG0, DG1, DG2, DG3, DG4, DG5, DG6, DG7, DG8, DG9, DGa, DGb, DGc, DGd, DGe, DGf};
 uint8_t led_pn[4]  = {LED0, LED1, LED2, LED3};
-	
+
 void led_screen_init()
 {
 	SEGMENTS_DDR = 0xFF;
@@ -44,14 +46,33 @@ void write_to_led(uint16_t num, uint8_t digit)
 	SEGMENTS_PORT = digits[d[3]];
 	LED_SELECT_PORT |= (1<<LED3);
 	poweroff_led();	
-	
-// 	for (uint8_t i=0; i<4 ; i++)
-// 	{
-// 		//poweroff_led();
-// 		SEGMENTS_PORT = digits[d[i]];
-// 		LED_SELECT_PORT |= led_pn[i];
-// 	}
-	//poweroff_led();
+}
+
+void write_to_led_hex(uint8_t hex1, uint8_t hex2, uint16_t loop)
+{
+	uint8_t h1, h2, h3, h4;
+	h1 = (hex1>>4) & 0b00001111;
+	h2 = hex1 & 0b00001111;
+	h3 = (hex2>>4) & 0b00001111;
+	h4 = hex2 & 0b00001111;
+	for (uint16_t i=0 ; i<loop ; i+=4)
+	{
+		poweroff_led();
+		SEGMENTS_PORT = digits[h1];
+		LED_SELECT_PORT |= (1<<LED0);
+		
+		poweroff_led();
+		SEGMENTS_PORT = digits[h2];		
+		LED_SELECT_PORT |= (1<<LED1);
+		
+		poweroff_led();
+		SEGMENTS_PORT = digits[h3];
+		LED_SELECT_PORT |= (1<<LED2);
+		
+		poweroff_led();
+		SEGMENTS_PORT = digits[h4];
+		LED_SELECT_PORT |= (1<<LED3);
+	}
 }
 
 void devide_4_digits(uint16_t num, uint8_t * d)

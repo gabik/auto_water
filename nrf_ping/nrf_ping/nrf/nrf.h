@@ -16,7 +16,7 @@
 // NRF settings
 #define nrf_CH         2 // Channel (2.4Ghz + x1Mhz)
 #define nrf_PAYLOAD    4 // in Bytes (id, 2xdata, cksum)
-#define nrf_CONFIG     ((1<<MASK_MAX_RT) | (1<<MASK_RX_DR) | (MASK_TX_DS)) // Disabling IRQ
+#define nrf_CONFIG     ((1<<MASK_MAX_RT) | (1<<MASK_RX_DR) | (1<<MASK_TX_DS)) // Disabling IRQ
 
 // Pin definitions for chip select and chip enabled of the MiRF module
 #define NRF_PORT	PORTB

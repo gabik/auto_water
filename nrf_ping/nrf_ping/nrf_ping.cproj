@@ -154,6 +154,7 @@
   <ItemGroup>
     <Folder Include="led_screen" />
     <Folder Include="misc" />
+    <Folder Include="old_libs" />
     <Folder Include="rx" />
     <Folder Include="spi" />
     <Folder Include="tx" />

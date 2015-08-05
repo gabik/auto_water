@@ -28,7 +28,29 @@ void setup_rx()
  	nrf_config(0);
 	init_button();
 	led_screen_init();
+	DDRC |= (1<<PC0);
+	PORTC &= ~(1<<PC0);
 	count = 0;
+	uint8_t reg_val1, val1=0, val2=0;
+	uint8_t reg_val5[5];
+	for (uint8_t i=0 ; i<=0x17 ; i+=2)
+	{
+		for (uint8_t j = i ; j<i+2 ; j++)
+		{
+			poweroff_led();
+			if (j == 0x0A || j == 0x0B || j == 0x10)
+			{
+				nrf_read_register(j, reg_val5, 5) ;
+				reg_val1 = reg_val5[4];
+			}
+			else
+				nrf_read_register(j, &reg_val1, 1);
+			if (j==i) val1=reg_val1;
+			else val2=reg_val1;
+		}
+		write_to_led_hex(val1, val2, 400);		
+		poweroff_led();
+	}
 }
 
 void loop_rx()
