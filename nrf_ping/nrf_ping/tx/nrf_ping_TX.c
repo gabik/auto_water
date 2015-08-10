@@ -57,7 +57,8 @@ void loop_tx()
 	// uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
 	if (check_button_click())
 	{
-		send_counter(0xff);
+		//send_counter(0xff);
+		gabi_send();
 	}
 }
 

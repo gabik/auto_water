@@ -44,4 +44,5 @@ extern void		nrf_read_register(uint8_t reg, uint8_t * value, uint8_t len);
 extern void		nrf_write_register(uint8_t reg, uint8_t * value, uint8_t len);
 extern void		nrf_write_register_1(uint8_t reg, uint8_t value);
 
+void gabi_send();
 #endif /* NRF_H_ */

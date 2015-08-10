@@ -30,6 +30,9 @@ void nrf_send(uint8_t id, uint8_t * data)
 	
 	write_to_led_hex(raw[0], raw[1], 500);
 	write_to_led_hex(raw[2], raw[3], 500);	
+	PORTC |= (1<<PC0);
+	_delay_ms(100);
+	PORTC &= ~(1<<PC0);	
 	nrf_send_raw(raw);
 }
 

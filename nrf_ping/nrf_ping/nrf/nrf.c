@@ -16,7 +16,7 @@
 #include <util/delay.h>
 
 // Defines for setting the NRF registers for transmitting or receiving mode
-#define TX_POWERUP nrf_config_register((1<<PWR_UP) | (0<<PRIM_RX))
+#define TX_POWERUP nrf_config_register((1<<PWR_UP) & ~(1<<PRIM_RX))
 #define RX_POWERUP nrf_config_register((1<<PWR_UP) | (1<<PRIM_RX))
 #define POWERDN    nrf_config_register(0)
 #define RESET_STT  nrf_write_register_1(STATUS, ((1<<RX_DR) | (1<<TX_DS) | (1<<MAX_RT)))
@@ -149,22 +149,26 @@ void nrf_send_raw(uint8_t * value)
 
 	PTX = 1;                        // Set to transmitter mode
 	TX_POWERUP;                     // Go to TX mode
-	RESET_STT;
-	_delay_us(150);
+	//RESET_STT;
+	//_delay_us(150);
 	//nrf_CE_lo;						// Stop listening
 	
-	nrf_CSN_lo;                    // Pull down chip select
-	spi_fast_shift( FLUSH_TX );     // Write cmd to flush tx fifo
-	nrf_CSN_hi;                    // Pull up chip select
-	
+	//nrf_CSN_lo;                    // Pull down chip select
+	//spi_fast_shift( FLUSH_TX );     // Write cmd to flush tx fifo
+	//nrf_CSN_hi;                    // Pull up chip select
+	//_delay_ms(1);
 	nrf_CSN_lo;                    // Pull down chip select
 	spi_fast_shift( W_TX_PAYLOAD ); // Write cmd to write payload
-	spi_transmit_sync(value,nrf_PAYLOAD);   // Write payload
+	uint8_t value1[4] = {10,10,10,10};
+	spi_transfer_sync(value1, value1, 4);   // Write payload
 	nrf_CSN_hi;                    // Pull up chip select
-	nrf_CE_hi;                     // Start transmission	
+	nrf_CE_hi;  
+	_delay_us(20);                   // Start transmission	
+	nrf_CE_lo;
 	// Back to Listening
 	PTX = 0;
 	RX_POWERUP;
+	RESET_STT;
 	nrf_CSN_hi;
 	_delay_us(130);
 }
@@ -190,3 +194,45 @@ extern void nrf_get_data(uint8_t * data)
 	RESET_STT;   // Reset status register
 }
 */
+
+void gabi_send()
+{
+	//uint8_t con;
+	//nrf_read_register(0, &con, 1);
+	//nrf_write_register_1(CONFIG, ((con | (1<<PWR_UP)) & ~(1<<PRIM_RX)));
+	
+	nrf_CE_lo;
+	
+	nrf_CSN_lo;
+	spi_fast_shift(FLUSH_TX);
+	nrf_CSN_hi;
+	nrf_CSN_lo;
+	spi_fast_shift(FLUSH_RX);
+	nrf_CSN_hi;
+	
+	POWERDN;
+	_delay_us(130);	
+	TX_POWERUP;
+	_delay_us(130);
+		
+	nrf_CSN_lo;                    // Pull down chip select
+	spi_fast_shift( W_TX_PAYLOAD ); // Write cmd to write payload
+	spi_fast_shift(0x14);
+	spi_fast_shift(0x14);
+	spi_fast_shift(0x14);
+	spi_fast_shift(0x14);
+	nrf_CSN_hi;                    // Pull up chip select
+	
+	nrf_CE_hi;
+	_delay_us(10);                   // Start transmission
+	nrf_CE_lo;
+	
+	RX_POWERUP;
+	RESET_STT;
+	nrf_CE_hi;
+	_delay_us(130);
+	PORTC|=(1<<PC0);
+	_delay_ms(100);
+	PORTC&=~(1<<PC0);
+	nrf_CSN_hi;
+}

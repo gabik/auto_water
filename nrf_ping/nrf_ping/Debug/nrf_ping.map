@@ -46,12 +46,26 @@ Discarded input sections
                 0x00000000       0x10 nrf/nrf.o
  .text.nrf_set_TADDR
                 0x00000000        0xc nrf/nrf.o
+ .text.nrf_send_raw
+                0x00000000       0x78 nrf/nrf.o
  .text.nrf_get_raw
                 0x00000000       0x28 nrf/nrf.o
  .text          0x00000000        0x0 nrf/nrf_operations.o
  .data          0x00000000        0x0 nrf/nrf_operations.o
  .bss           0x00000000        0x0 nrf/nrf_operations.o
+ .text.nrf_send
+                0x00000000       0x5c nrf/nrf_operations.o
  .text.nrf_get  0x00000000       0x84 nrf/nrf_operations.o
+ .debug_info    0x00000000      0x36b nrf/nrf_operations.o
+ .debug_abbrev  0x00000000      0x1b9 nrf/nrf_operations.o
+ .debug_loc     0x00000000      0x311 nrf/nrf_operations.o
+ .debug_aranges
+                0x00000000       0x28 nrf/nrf_operations.o
+ .debug_ranges  0x00000000       0x30 nrf/nrf_operations.o
+ .debug_line    0x00000000      0x18d nrf/nrf_operations.o
+ .debug_str     0x00000000      0x205 nrf/nrf_operations.o
+ .comment       0x00000000       0x31 nrf/nrf_operations.o
+ .debug_frame   0x00000000       0x64 nrf/nrf_operations.o
  .text          0x00000000        0x0 rx/nrf_ping_RX.o
  .data          0x00000000        0x0 rx/nrf_ping_RX.o
  .bss           0x00000000        0x0 rx/nrf_ping_RX.o
@@ -79,6 +93,18 @@ Discarded input sections
  .text          0x00000000        0x0 tx/tx.o
  .data          0x00000000        0x0 tx/tx.o
  .bss           0x00000000        0x0 tx/tx.o
+ .text.send_counter
+                0x00000000       0x26 tx/tx.o
+ .debug_info    0x00000000       0xf9 tx/tx.o
+ .debug_abbrev  0x00000000       0xbf tx/tx.o
+ .debug_loc     0x00000000       0x75 tx/tx.o
+ .debug_aranges
+                0x00000000       0x20 tx/tx.o
+ .debug_ranges  0x00000000       0x10 tx/tx.o
+ .debug_line    0x00000000       0xcc tx/tx.o
+ .debug_str     0x00000000      0x16f tx/tx.o
+ .comment       0x00000000       0x31 tx/tx.o
+ .debug_frame   0x00000000       0x34 tx/tx.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
@@ -252,7 +278,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x5f0
+.text           0x00000000      0x59e
  *(.vectors)
  .vectors       0x00000000       0x68 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr5/crtm328p.o
                 0x00000000                __vector_default
@@ -375,39 +401,33 @@ END GROUP
  .text.nrf_config
                 0x000002c4       0xde nrf/nrf.o
                 0x000002c4                nrf_config
- .text.nrf_send_raw
-                0x000003a2       0x68 nrf/nrf.o
-                0x000003a2                nrf_send_raw
- .text.nrf_send
-                0x0000040a       0x4c nrf/nrf_operations.o
-                0x0000040a                nrf_send
+ .text.gabi_send
+                0x000003a2       0x8c nrf/nrf.o
+                0x000003a2                gabi_send
  .text.spi_init
-                0x00000456       0x1c spi/spi.o
-                0x00000456                spi_init
+                0x0000042e       0x1c spi/spi.o
+                0x0000042e                spi_init
  .text.spi_transfer_sync
-                0x00000472       0x26 spi/spi.o
-                0x00000472                spi_transfer_sync
+                0x0000044a       0x26 spi/spi.o
+                0x0000044a                spi_transfer_sync
  .text.spi_transmit_sync
-                0x00000498       0x1e spi/spi.o
-                0x00000498                spi_transmit_sync
+                0x00000470       0x1e spi/spi.o
+                0x00000470                spi_transmit_sync
  .text.spi_fast_shift
-                0x000004b6        0xc spi/spi.o
-                0x000004b6                spi_fast_shift
+                0x0000048e        0xc spi/spi.o
+                0x0000048e                spi_fast_shift
  .text.setup_tx
-                0x000004c2       0xea tx/nrf_ping_TX.o
-                0x000004c2                setup_tx
- .text.loop_tx  0x000005ac       0x10 tx/nrf_ping_TX.o
-                0x000005ac                loop_tx
- .text.main_tx  0x000005bc        0xa tx/nrf_ping_TX.o
-                0x000005bc                main_tx
- .text.send_counter
-                0x000005c6       0x26 tx/tx.o
-                0x000005c6                send_counter
-                0x000005ec                . = ALIGN (0x2)
+                0x0000049a       0xea tx/nrf_ping_TX.o
+                0x0000049a                setup_tx
+ .text.loop_tx  0x00000584        0xc tx/nrf_ping_TX.o
+                0x00000584                loop_tx
+ .text.main_tx  0x00000590        0xa tx/nrf_ping_TX.o
+                0x00000590                main_tx
+                0x0000059a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000005ec        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
-                0x000005ec                _exit
-                0x000005ec                exit
+ .fini9         0x0000059a        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
+                0x0000059a                _exit
+                0x0000059a                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -426,11 +446,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000005ec        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000059a        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000005f0                _etext = .
+                0x0000059e                _etext = .
 
-.data           0x00800100       0x1a load address 0x000005f0
+.data           0x00800100       0x1a load address 0x0000059e
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -459,8 +479,8 @@ END GROUP
  COMMON         0x0080011f        0x1 tx/nrf_ping_TX.o
                 0x0080011f                clck_count
                 0x00800120                PROVIDE (__bss_end, .)
-                0x000005f0                __data_load_start = LOADADDR (.data)
-                0x0000060a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000059e                __data_load_start = LOADADDR (.data)
+                0x000005b8                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800120        0x0
                 0x00800120                PROVIDE (__noinit_start, .)
@@ -513,10 +533,8 @@ END GROUP
  .comment       0x00000000       0x31 main.o
  .comment       0x00000000       0x31 misc/misc.o
  .comment       0x00000000       0x31 nrf/nrf.o
- .comment       0x00000000       0x31 nrf/nrf_operations.o
  .comment       0x00000000       0x31 spi/spi.o
  .comment       0x00000000       0x31 tx/nrf_ping_TX.o
- .comment       0x00000000       0x31 tx/tx.o
 
 .note.gnu.build-id
  *(.note.gnu.build-id)
@@ -533,7 +551,7 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x1b0
+.debug_aranges  0x00000000      0x170
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x40 led_screen/led_screen.o
@@ -542,64 +560,52 @@ END GROUP
  .debug_aranges
                 0x00000060       0x28 misc/misc.o
  .debug_aranges
-                0x00000088       0x78 nrf/nrf.o
+                0x00000088       0x80 nrf/nrf.o
  .debug_aranges
-                0x00000100       0x28 nrf/nrf_operations.o
+                0x00000108       0x38 spi/spi.o
  .debug_aranges
-                0x00000128       0x38 spi/spi.o
- .debug_aranges
-                0x00000160       0x30 tx/nrf_ping_TX.o
- .debug_aranges
-                0x00000190       0x20 tx/tx.o
+                0x00000140       0x30 tx/nrf_ping_TX.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x15d1
+.debug_info     0x00000000     0x1404
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x347 led_screen/led_screen.o
  .debug_info    0x00000347       0x67 main.o
  .debug_info    0x000003ae       0xe3 misc/misc.o
- .debug_info    0x00000491      0x894 nrf/nrf.o
- .debug_info    0x00000d25      0x2e5 nrf/nrf_operations.o
- .debug_info    0x0000100a      0x160 spi/spi.o
- .debug_info    0x0000116a      0x36e tx/nrf_ping_TX.o
- .debug_info    0x000014d8       0xf9 tx/tx.o
+ .debug_info    0x00000491      0xab5 nrf/nrf.o
+ .debug_info    0x00000f46      0x160 spi/spi.o
+ .debug_info    0x000010a6      0x35e tx/nrf_ping_TX.o
 
-.debug_abbrev   0x00000000      0x940
+.debug_abbrev   0x00000000      0x735
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x180 led_screen/led_screen.o
  .debug_abbrev  0x00000180       0x5b main.o
  .debug_abbrev  0x000001db       0x89 misc/misc.o
- .debug_abbrev  0x00000264      0x21e nrf/nrf.o
- .debug_abbrev  0x00000482      0x151 nrf/nrf_operations.o
- .debug_abbrev  0x000005d3       0xd1 spi/spi.o
- .debug_abbrev  0x000006a4      0x1dd tx/nrf_ping_TX.o
- .debug_abbrev  0x00000881       0xbf tx/tx.o
+ .debug_abbrev  0x00000264      0x227 nrf/nrf.o
+ .debug_abbrev  0x0000048b       0xd1 spi/spi.o
+ .debug_abbrev  0x0000055c      0x1d9 tx/nrf_ping_TX.o
 
-.debug_line     0x00000000      0xa7a
+.debug_line     0x00000000      0x8e8
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x20d led_screen/led_screen.o
  .debug_line    0x0000020d       0x52 main.o
  .debug_line    0x0000025f       0xd6 misc/misc.o
- .debug_line    0x00000335      0x293 nrf/nrf.o
- .debug_line    0x000005c8      0x10b nrf/nrf_operations.o
- .debug_line    0x000006d3       0xf6 spi/spi.o
- .debug_line    0x000007c9      0x1e5 tx/nrf_ping_TX.o
- .debug_line    0x000009ae       0xcc tx/tx.o
+ .debug_line    0x00000335      0x2df nrf/nrf.o
+ .debug_line    0x00000614       0xf6 spi/spi.o
+ .debug_line    0x0000070a      0x1de tx/nrf_ping_TX.o
 
-.debug_frame    0x00000000      0x3a0
+.debug_frame    0x00000000      0x31c
  *(.debug_frame)
  .debug_frame   0x00000000       0xb0 led_screen/led_screen.o
  .debug_frame   0x000000b0       0x24 main.o
  .debug_frame   0x000000d4       0x34 misc/misc.o
- .debug_frame   0x00000108      0x134 nrf/nrf.o
- .debug_frame   0x0000023c       0x64 nrf/nrf_operations.o
- .debug_frame   0x000002a0       0x54 spi/spi.o
- .debug_frame   0x000002f4       0x78 tx/nrf_ping_TX.o
- .debug_frame   0x0000036c       0x34 tx/tx.o
+ .debug_frame   0x00000108      0x148 nrf/nrf.o
+ .debug_frame   0x00000250       0x54 spi/spi.o
+ .debug_frame   0x000002a4       0x78 tx/nrf_ping_TX.o
 
-.debug_str      0x00000000      0x41b
+.debug_str      0x00000000      0x3df
  *(.debug_str)
  .debug_str     0x00000000      0x1e0 led_screen/led_screen.o
                                 0x21b (size before relaxing)
@@ -607,25 +613,19 @@ END GROUP
                                  0xdf (size before relaxing)
  .debug_str     0x000001f9       0x42 misc/misc.o
                                 0x177 (size before relaxing)
- .debug_str     0x0000023b      0x130 nrf/nrf.o
-                                0x2aa (size before relaxing)
- .debug_str     0x0000036b       0x35 nrf/nrf_operations.o
-                                0x1ba (size before relaxing)
- .debug_str     0x000003a0       0x1c spi/spi.o
+ .debug_str     0x0000023b      0x141 nrf/nrf.o
+                                0x2ca (size before relaxing)
+ .debug_str     0x0000037c       0x1c spi/spi.o
                                 0x192 (size before relaxing)
- .debug_str     0x000003bc       0x54 tx/nrf_ping_TX.o
-                                0x266 (size before relaxing)
- .debug_str     0x00000410        0xb tx/tx.o
-                                0x16f (size before relaxing)
+ .debug_str     0x00000398       0x47 tx/nrf_ping_TX.o
+                                0x263 (size before relaxing)
 
-.debug_loc      0x00000000      0xd93
+.debug_loc      0x00000000      0xa16
  *(.debug_loc)
  .debug_loc     0x00000000      0x3bf led_screen/led_screen.o
- .debug_loc     0x000003bf      0x412 nrf/nrf.o
- .debug_loc     0x000007d1      0x311 nrf/nrf_operations.o
- .debug_loc     0x00000ae2       0xfb spi/spi.o
- .debug_loc     0x00000bdd      0x141 tx/nrf_ping_TX.o
- .debug_loc     0x00000d1e       0x75 tx/tx.o
+ .debug_loc     0x000003bf      0x41b nrf/nrf.o
+ .debug_loc     0x000007da       0xfb spi/spi.o
+ .debug_loc     0x000008d5      0x141 tx/nrf_ping_TX.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -645,16 +645,14 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x178
+.debug_ranges   0x00000000      0x140
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x30 led_screen/led_screen.o
  .debug_ranges  0x00000030       0x10 main.o
  .debug_ranges  0x00000040       0x18 misc/misc.o
- .debug_ranges  0x00000058       0x68 nrf/nrf.o
- .debug_ranges  0x000000c0       0x30 nrf/nrf_operations.o
- .debug_ranges  0x000000f0       0x28 spi/spi.o
- .debug_ranges  0x00000118       0x50 tx/nrf_ping_TX.o
- .debug_ranges  0x00000168       0x10 tx/tx.o
+ .debug_ranges  0x00000058       0x70 nrf/nrf.o
+ .debug_ranges  0x000000c8       0x28 spi/spi.o
+ .debug_ranges  0x000000f0       0x50 tx/nrf_ping_TX.o
 
 .debug_macro
  *(.debug_macro)

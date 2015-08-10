@@ -11,7 +11,7 @@
 
 uint8_t send_counter(uint8_t clck_count)
 {
-	uint8_t data[DATA_PAYLOAD] = {clck_count, clck_count};
+	uint8_t data[2] = {clck_count, clck_count};
 	nrf_send(1, data);
 	return 1;
 }
