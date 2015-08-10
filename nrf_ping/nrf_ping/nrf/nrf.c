@@ -196,11 +196,7 @@ extern void nrf_get_data(uint8_t * data)
 */
 
 void gabi_send()
-{
-	//uint8_t con;
-	//nrf_read_register(0, &con, 1);
-	//nrf_write_register_1(CONFIG, ((con | (1<<PWR_UP)) & ~(1<<PRIM_RX)));
-	
+{	
 	nrf_CE_lo;
 	
 	nrf_CSN_lo;

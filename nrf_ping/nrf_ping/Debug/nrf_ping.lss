@@ -705,11 +705,11 @@ void nrf_config(uint8_t is_tx)
  3a0:	08 95       	ret
 
 000003a2 <gabi_send>:
-{
-	//uint8_t con;
-	//nrf_read_register(0, &con, 1);
-	//nrf_write_register_1(CONFIG, ((con | (1<<PWR_UP)) & ~(1<<PRIM_RX)));
-	
+}
+*/
+
+void gabi_send()
+{	
 	nrf_CE_lo;
  3a2:	28 98       	cbi	0x05, 0	; 5
 	
