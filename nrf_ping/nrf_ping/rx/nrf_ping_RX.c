@@ -55,10 +55,8 @@ void setup_rx()
 
 void loop_rx()
 {
-	while (!nrf_get(MY_ID, data)) {write_to_led(count, 0);} // Wait till we got data
-	//while (!check_button_click()) {write_to_led(count, 0);} // Wait till we got data
+	while (!nrf_get(MY_ID, data)) {write_to_led(count, 0);}
 	if (data[0]) count = data[0];
-	//count++;
 }
 
 int main_rx(void) { setup_rx(); while(1) loop_rx(); }

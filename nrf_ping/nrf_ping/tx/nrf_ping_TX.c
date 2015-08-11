@@ -17,7 +17,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-uint8_t clck_count;
+uint8_t clck_count = 0;
 
 void setup_tx()
 {
@@ -54,12 +54,8 @@ void setup_tx()
 
 void loop_tx()
 {
-	// uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
 	if (check_button_click())
-	{
-		//send_counter(0xff);
-		gabi_send();
-	}
+		send_counter(clck_count++);
 }
 
 int main_tx(void) {setup_tx(); while(1) loop_tx(); }

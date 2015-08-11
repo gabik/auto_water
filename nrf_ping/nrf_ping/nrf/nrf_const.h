@@ -53,6 +53,8 @@
 #define PLL_LOCK    4
 #define RF_DR_HIGH  3  
 #define RF_PWR      1 // 2 bit (1:2) - 11 = 0dBm
+#define RF_PWR_LOW  1
+#define RF_PWR_HIGH 2
 #define LNA_HCURR   0
 
 #define STATUS      0x07
@@ -91,6 +93,8 @@
 #define TX_EMPTY    4
 #define RX_FULL     1
 #define RX_EMPTY    0
+
+#define DYNPD 0x1C
 
 /* Instruction Mnemonics */
 #define R_REGISTER    0x00 // & 5 bit val (000A AAAA)

@@ -12,11 +12,12 @@
 #define NRF_H_
 
 #include <avr/io.h>
+#include "nrf_const.h"
 
 // NRF settings
 #define nrf_CH         2 // Channel (2.4Ghz + x1Mhz)
 #define nrf_PAYLOAD    4 // in Bytes (id, 2xdata, cksum)
-#define nrf_CONFIG     ((1<<MASK_MAX_RT) | (1<<MASK_RX_DR) | (1<<MASK_TX_DS)) // Disabling IRQ
+#define nrf_CONFIG     ((1<<MASK_MAX_RT) | (1<<MASK_RX_DR) | (1<<MASK_TX_DS)) // Disabling IRQ 
 
 // Pin definitions for chip select and chip enabled of the MiRF module
 #define NRF_PORT	PORTB
@@ -43,6 +44,6 @@ extern void		nrf_config_register(uint8_t value);
 extern void		nrf_read_register(uint8_t reg, uint8_t * value, uint8_t len);
 extern void		nrf_write_register(uint8_t reg, uint8_t * value, uint8_t len);
 extern void		nrf_write_register_1(uint8_t reg, uint8_t value);
+uint8_t nrf24l01_readregister(uint8_t reg);
 
-void gabi_send();
 #endif /* NRF_H_ */
