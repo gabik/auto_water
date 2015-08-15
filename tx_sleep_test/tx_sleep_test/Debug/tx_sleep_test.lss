@@ -1,0 +1,211 @@
+
+tx_sleep_test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000012a  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .comment      00000030  00000000  00000000  0000017e  2**0
+                  CONTENTS, READONLY
+  2 .debug_aranges 00000038  00000000  00000000  000001ae  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   000001a9  00000000  00000000  000001e6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 000000ff  00000000  00000000  0000038f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   0000017c  00000000  00000000  0000048e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  0000009c  00000000  00000000  0000060c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    0000018c  00000000  00000000  000006a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    000000cb  00000000  00000000  00000834  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000028  00000000  00000000  000008ff  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <__vector_1>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 8e 00 	call	0x11c	; 0x11c <main>
+  78:	0c 94 93 00 	jmp	0x126	; 0x126 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <setup>:
+#define LED_DELAY 200
+
+void setup()
+{
+	// Interrupt pin
+	DDRD &= ~(1<<PD2); // INT0
+  80:	52 98       	cbi	0x0a, 2	; 10
+	PORTD |= (1<<PD2); // Set HIGH	
+  82:	5a 9a       	sbi	0x0b, 2	; 11
+	EICRA |= (1<<ISC01); // Wake on LOW
+  84:	e9 e6       	ldi	r30, 0x69	; 105
+  86:	f0 e0       	ldi	r31, 0x00	; 0
+  88:	80 81       	ld	r24, Z
+  8a:	82 60       	ori	r24, 0x02	; 2
+  8c:	80 83       	st	Z, r24
+	
+	// Sleep mode
+	set_sleep_mode(SLEEP_MODE_PWR_DOWN);	
+  8e:	83 b7       	in	r24, 0x33	; 51
+  90:	81 7f       	andi	r24, 0xF1	; 241
+  92:	84 60       	ori	r24, 0x04	; 4
+  94:	83 bf       	out	0x33, r24	; 51
+	
+	// LED
+	LED_DDR |= (1<<LED_PIN);
+  96:	54 9a       	sbi	0x0a, 4	; 10
+	LED_PORT &= ~(1<<LED_PIN);
+  98:	5c 98       	cbi	0x0b, 4	; 11
+	
+	sei();
+  9a:	78 94       	sei
+  9c:	08 95       	ret
+
+0000009e <power_down>:
+}
+
+void power_down()
+{
+	// NRF to sleep
+	EIMSK |= (1<<INT0); // INT0 enable
+  9e:	e8 9a       	sbi	0x1d, 0	; 29
+	LED_PORT &= ~(1<<LED_PIN);
+  a0:	5c 98       	cbi	0x0b, 4	; 11
+	EIFR |= (1<<INTF0); // clear flag	
+  a2:	e0 9a       	sbi	0x1c, 0	; 28
+	sei();
+  a4:	78 94       	sei
+	sleep_mode();
+  a6:	83 b7       	in	r24, 0x33	; 51
+  a8:	81 60       	ori	r24, 0x01	; 1
+  aa:	83 bf       	out	0x33, r24	; 51
+  ac:	88 95       	sleep
+  ae:	83 b7       	in	r24, 0x33	; 51
+  b0:	8e 7f       	andi	r24, 0xFE	; 254
+  b2:	83 bf       	out	0x33, r24	; 51
+  b4:	08 95       	ret
+
+000000b6 <__vector_1>:
+}
+
+ISR(INT0_vect) // wake up on click (INT0)
+{
+  b6:	1f 92       	push	r1
+  b8:	0f 92       	push	r0
+  ba:	0f b6       	in	r0, 0x3f	; 63
+  bc:	0f 92       	push	r0
+  be:	11 24       	eor	r1, r1
+  c0:	2f 93       	push	r18
+  c2:	3f 93       	push	r19
+  c4:	4f 93       	push	r20
+  c6:	5f 93       	push	r21
+  c8:	6f 93       	push	r22
+  ca:	7f 93       	push	r23
+  cc:	8f 93       	push	r24
+  ce:	9f 93       	push	r25
+  d0:	af 93       	push	r26
+  d2:	bf 93       	push	r27
+  d4:	ef 93       	push	r30
+  d6:	ff 93       	push	r31
+	EIMSK &= ~(1<<INT0); // INT0 disable
+  d8:	e8 98       	cbi	0x1d, 0	; 29
+	LED_PORT |= (1<<LED_PIN);
+  da:	5c 9a       	sbi	0x0b, 4	; 11
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  dc:	8f e4       	ldi	r24, 0x4F	; 79
+  de:	93 ec       	ldi	r25, 0xC3	; 195
+  e0:	01 97       	sbiw	r24, 0x01	; 1
+  e2:	f1 f7       	brne	.-4      	; 0xe0 <__vector_1+0x2a>
+  e4:	00 c0       	rjmp	.+0      	; 0xe6 <__vector_1+0x30>
+  e6:	00 00       	nop
+	_delay_ms(LED_DELAY);
+	LED_PORT &= ~(1<<LED_PIN);
+  e8:	5c 98       	cbi	0x0b, 4	; 11
+  ea:	8f e4       	ldi	r24, 0x4F	; 79
+  ec:	93 ec       	ldi	r25, 0xC3	; 195
+  ee:	01 97       	sbiw	r24, 0x01	; 1
+  f0:	f1 f7       	brne	.-4      	; 0xee <__vector_1+0x38>
+  f2:	00 c0       	rjmp	.+0      	; 0xf4 <__vector_1+0x3e>
+  f4:	00 00       	nop
+	_delay_ms(LED_DELAY);
+	power_down();
+  f6:	0e 94 4f 00 	call	0x9e	; 0x9e <power_down>
+}
+  fa:	ff 91       	pop	r31
+  fc:	ef 91       	pop	r30
+  fe:	bf 91       	pop	r27
+ 100:	af 91       	pop	r26
+ 102:	9f 91       	pop	r25
+ 104:	8f 91       	pop	r24
+ 106:	7f 91       	pop	r23
+ 108:	6f 91       	pop	r22
+ 10a:	5f 91       	pop	r21
+ 10c:	4f 91       	pop	r20
+ 10e:	3f 91       	pop	r19
+ 110:	2f 91       	pop	r18
+ 112:	0f 90       	pop	r0
+ 114:	0f be       	out	0x3f, r0	; 63
+ 116:	0f 90       	pop	r0
+ 118:	1f 90       	pop	r1
+ 11a:	18 95       	reti
+
+0000011c <main>:
+
+int main(void)
+{
+	setup();
+ 11c:	0e 94 40 00 	call	0x80	; 0x80 <setup>
+	power_down();
+ 120:	0e 94 4f 00 	call	0x9e	; 0x9e <power_down>
+ 124:	ff cf       	rjmp	.-2      	; 0x124 <main+0x8>
+
+00000126 <_exit>:
+ 126:	f8 94       	cli
+
+00000128 <__stop_program>:
+ 128:	ff cf       	rjmp	.-2      	; 0x128 <__stop_program>
