@@ -8,6 +8,7 @@
  */ 
 
 #define F_CPU 1000000L // For Delay.h
+#define MY_ID 0 // TX module
 
 // #include "../misc/misc.h"
 // #include "../led_screen/led_screen.h"

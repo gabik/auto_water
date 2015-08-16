@@ -35,4 +35,4 @@
 
 #define F_CPU 1000000L
 
-int main(void) { return main_rx(); }
+int main(void) { return main_tx(); }

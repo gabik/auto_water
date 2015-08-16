@@ -35,7 +35,6 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../led_screen \
 ../misc \
-../old_libs \
 ../rx \
 ../spi \
 ../tx \
@@ -51,8 +50,7 @@ C_SRCS +=  \
 ../nrf/nrf_operations.c \
 ../rx/nrf_ping_RX.c \
 ../spi/spi.c \
-../tx/nrf_ping_TX.c \
-../tx/tx.c
+../tx/nrf_ping_TX.c
 
 
 PREPROCESSING_SRCS += 
@@ -69,8 +67,7 @@ nrf/nrf.o \
 nrf/nrf_operations.o \
 rx/nrf_ping_RX.o \
 spi/spi.o \
-tx/nrf_ping_TX.o \
-tx/tx.o
+tx/nrf_ping_TX.o
 
 OBJS_AS_ARGS +=  \
 led_screen/led_screen.o \
@@ -80,8 +77,7 @@ nrf/nrf.o \
 nrf/nrf_operations.o \
 rx/nrf_ping_RX.o \
 spi/spi.o \
-tx/nrf_ping_TX.o \
-tx/tx.o
+tx/nrf_ping_TX.o
 
 C_DEPS +=  \
 led_screen/led_screen.d \
@@ -91,8 +87,7 @@ nrf/nrf.d \
 nrf/nrf_operations.d \
 rx/nrf_ping_RX.d \
 spi/spi.d \
-tx/nrf_ping_TX.d \
-tx/tx.d
+tx/nrf_ping_TX.d
 
 C_DEPS_AS_ARGS +=  \
 led_screen/led_screen.d \
@@ -102,8 +97,7 @@ nrf/nrf.d \
 nrf/nrf_operations.d \
 rx/nrf_ping_RX.d \
 spi/spi.d \
-tx/nrf_ping_TX.d \
-tx/tx.d
+tx/nrf_ping_TX.d
 
 OUTPUT_FILE_PATH +=nrf_ping.elf
 
@@ -119,8 +113,6 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

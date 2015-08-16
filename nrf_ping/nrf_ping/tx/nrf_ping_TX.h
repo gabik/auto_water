@@ -9,8 +9,6 @@
 #ifndef NRF_PING_TX_H_
 #define NRF_PING_TX_H_
 
-#define MY_ID 0 // TX module
-
 int main_tx(void);
 
 #endif /* NRF_PING_TX_H_ */

@@ -9,7 +9,7 @@
 
 #include "led_screen.h"
 #include <avr/io.h>
-#include <avr/delay.h>
+#include <util//delay.h>
 
 uint8_t digits[16] = {DG0, DG1, DG2, DG3, DG4, DG5, DG6, DG7, DG8, DG9, DGa, DGb, DGc, DGd, DGe, DGf};
 uint8_t led_pn[4]  = {LED0, LED1, LED2, LED3};

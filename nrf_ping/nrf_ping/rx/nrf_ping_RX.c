@@ -8,6 +8,7 @@
  */ 
 
 #define F_CPU 1000000L // For Delay.h
+#define MY_ID 1 // Reciever #1
 
 #include "../nrf/nrf_operations.h"
 #include "nrf_ping_RX.h"

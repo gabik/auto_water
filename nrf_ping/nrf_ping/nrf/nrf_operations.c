@@ -25,21 +25,21 @@ uint8_t tmp_data[DATA_PAYLOAD];
 void nrf_send_ack(uint8_t from, uint8_t to, uint8_t seq)
 {
 	uint8_t raw[nrf_PAYLOAD];
-    build_nrf_payload(from, to, cur_seq, MY_ACK, raw);
+    build_nrf_payload(from, to, seq, MY_ACK, raw);
 }
 
 uint8_t build_xor(uint8_t * data)
 {
     uint8_t xor = 0;
     for (uint8_t i = 0 ; i<nrf_PAYLOAD-1 ; i++) xor ^= data[i];
-    return xor
+    return xor;
 }
 
 void build_nrf_payload(uint8_t from, uint8_t to, uint8_t seq, uint8_t * data, uint8_t * raw)
 {
     raw[FROM_ID_BYTE] = from;
 	raw[TO_ID_BYTE] = to;
-    raw[SEQ_BYTE] = cur_seq;
+    raw[SEQ_BYTE] = seq;
 	for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) raw[i+DATA_BYTE] = data[i];
     raw[XOR_BYTE] = build_xor(raw);
 }
@@ -63,7 +63,7 @@ uint8_t nrf_send(uint8_t from, uint8_t to, uint8_t * data)
         {
             is_ack = 0;
             for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) if (tmp_data[i] != MY_ACK[i]) is_ack = 0;
-            ack_seq = tmp_data[SEQ_BYTE];
+            uint8_t ack_seq = tmp_data[SEQ_BYTE];
             if ((is_ack) && (cur_seq == ack_seq)) return(1);
         }
     }

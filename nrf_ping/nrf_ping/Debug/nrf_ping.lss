@@ -3,36 +3,36 @@ nrf_ping.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000001a  00800100  00000646  000006da  2**0
+  0 .data         0000000c  00800100  000005e0  00000674  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000646  00000000  00000000  00000094  2**1
+  1 .text         000005e0  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000009  0080011a  0080011a  000006f4  2**0
+  2 .bss          00000005  0080010c  0080010c  00000680  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000006f4  2**0
+  3 .comment      00000030  00000000  00000000  00000680  2**0
                   CONTENTS, READONLY
-  4 .debug_aranges 00000198  00000000  00000000  00000724  2**0
+  4 .debug_aranges 00000160  00000000  00000000  000006b0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000016b1  00000000  00000000  000008bc  2**0
+  5 .debug_info   00001488  00000000  00000000  00000810  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000008ff  00000000  00000000  00001f6d  2**0
+  6 .debug_abbrev 0000077f  00000000  00000000  00001c98  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000a45  00000000  00000000  0000286c  2**0
+  7 .debug_line   00000796  00000000  00000000  00002417  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  0000036c  00000000  00000000  000032b4  2**2
+  8 .debug_frame  00000350  00000000  00000000  00002bb0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000041b  00000000  00000000  00003620  2**0
+  9 .debug_str    000003ba  00000000  00000000  00002f00  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000d05  00000000  00000000  00003a3b  2**0
+ 10 .debug_loc    00000ca3  00000000  00000000  000032ba  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000170  00000000  00000000  00004740  2**0
+ 11 .debug_ranges 00000110  00000000  00000000  00003f5d  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
-   4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+   4:	0c 94 98 02 	jmp	0x530	; 0x530 <__vector_1>
    8:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
    c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -70,18 +70,18 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e6 e4       	ldi	r30, 0x46	; 70
-  7c:	f6 e0       	ldi	r31, 0x06	; 6
+  7a:	e0 ee       	ldi	r30, 0xE0	; 224
+  7c:	f5 e0       	ldi	r31, 0x05	; 5
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	aa 31       	cpi	r26, 0x1A	; 26
+  84:	ac 30       	cpi	r26, 0x0C	; 12
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
 
 0000008a <__do_clear_bss>:
   8a:	21 e0       	ldi	r18, 0x01	; 1
-  8c:	aa e1       	ldi	r26, 0x1A	; 26
+  8c:	ac e0       	ldi	r26, 0x0C	; 12
   8e:	b1 e0       	ldi	r27, 0x01	; 1
   90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
 
@@ -89,1153 +89,1058 @@ Disassembly of section .text:
   92:	1d 92       	st	X+, r1
 
 00000094 <.do_clear_bss_start>:
-  94:	a3 32       	cpi	r26, 0x23	; 35
+  94:	a1 31       	cpi	r26, 0x11	; 17
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 31 01 	call	0x262	; 0x262 <main>
-  9e:	0c 94 21 03 	jmp	0x642	; 0x642 <_exit>
+  9a:	0e 94 53 00 	call	0xa6	; 0xa6 <main>
+  9e:	0c 94 ee 02 	jmp	0x5dc	; 0x5dc <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-000000a6 <poweroff_led>:
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
-
-	__builtin_avr_delay_cycles(__ticks_dc);
-  a6:	89 ef       	ldi	r24, 0xF9	; 249
-  a8:	90 e0       	ldi	r25, 0x00	; 0
-  aa:	01 97       	sbiw	r24, 0x01	; 1
-  ac:	f1 f7       	brne	.-4      	; 0xaa <poweroff_led+0x4>
-  ae:	00 c0       	rjmp	.+0      	; 0xb0 <poweroff_led+0xa>
-  b0:	00 00       	nop
-}
-
-void poweroff_led()
-{
-	_delay_ms(1);
-	SEGMENTS_PORT = 0xFF; // + to cathode to power off
-  b2:	8f ef       	ldi	r24, 0xFF	; 255
-  b4:	8b b9       	out	0x0b, r24	; 11
-	LED_SELECT_PORT &= ~((1<<LED0) | (1<<LED1) | (1<<LED2) | (1<<LED3)); // 0 to LED ports (0 to Anode)
-  b6:	88 b1       	in	r24, 0x08	; 8
-  b8:	83 7c       	andi	r24, 0xC3	; 195
-  ba:	88 b9       	out	0x08, r24	; 8
-  bc:	08 95       	ret
-
-000000be <led_screen_init>:
-uint8_t digits[16] = {DG0, DG1, DG2, DG3, DG4, DG5, DG6, DG7, DG8, DG9, DGa, DGb, DGc, DGd, DGe, DGf};
-uint8_t led_pn[4]  = {LED0, LED1, LED2, LED3};
-
-void led_screen_init()
-{
-	SEGMENTS_DDR = 0xFF;
-  be:	8f ef       	ldi	r24, 0xFF	; 255
-  c0:	8a b9       	out	0x0a, r24	; 10
-	LED_SELECT_DDR |= (1<<LED0) | (1<<LED1) | (1<<LED2) | (1<<LED3);
-  c2:	87 b1       	in	r24, 0x07	; 7
-  c4:	8c 63       	ori	r24, 0x3C	; 60
-  c6:	87 b9       	out	0x07, r24	; 7
-	poweroff_led();
-  c8:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-  cc:	08 95       	ret
-
-000000ce <write_to_led_hex>:
-	LED_SELECT_PORT |= (1<<LED3);
-	poweroff_led();	
-}
-
-void write_to_led_hex(uint8_t hex1, uint8_t hex2, uint16_t loop)
-{
-  ce:	8f 92       	push	r8
-  d0:	9f 92       	push	r9
-  d2:	af 92       	push	r10
-  d4:	bf 92       	push	r11
-  d6:	cf 92       	push	r12
-  d8:	df 92       	push	r13
-  da:	ef 92       	push	r14
-  dc:	ff 92       	push	r15
-  de:	0f 93       	push	r16
-  e0:	1f 93       	push	r17
-  e2:	cf 93       	push	r28
-  e4:	df 93       	push	r29
-  e6:	ea 01       	movw	r28, r20
-	uint8_t h1, h2, h3, h4;
-	h1 = (hex1>>4) & 0b00001111;
-  e8:	a8 2e       	mov	r10, r24
-  ea:	a6 94       	lsr	r10
-  ec:	a6 94       	lsr	r10
-  ee:	a6 94       	lsr	r10
-  f0:	a6 94       	lsr	r10
-	h2 = hex1 & 0b00001111;
-  f2:	8f 70       	andi	r24, 0x0F	; 15
-	h3 = (hex2>>4) & 0b00001111;
-  f4:	e6 2e       	mov	r14, r22
-  f6:	e6 94       	lsr	r14
-  f8:	e6 94       	lsr	r14
-  fa:	e6 94       	lsr	r14
-  fc:	e6 94       	lsr	r14
-	h4 = hex2 & 0b00001111;
-  fe:	6f 70       	andi	r22, 0x0F	; 15
-	for (uint16_t i=0 ; i<loop ; i+=4)
- 100:	20 97       	sbiw	r28, 0x00	; 0
- 102:	a9 f1       	breq	.+106    	; 0x16e <write_to_led_hex+0xa0>
- 104:	81 2c       	mov	r8, r1
- 106:	91 2c       	mov	r9, r1
-	{
-		poweroff_led();
-		SEGMENTS_PORT = digits[h1];
- 108:	2a 2d       	mov	r18, r10
- 10a:	30 e0       	ldi	r19, 0x00	; 0
- 10c:	a9 01       	movw	r20, r18
- 10e:	40 50       	subi	r20, 0x00	; 0
- 110:	5f 4f       	sbci	r21, 0xFF	; 255
- 112:	5a 01       	movw	r10, r20
-		LED_SELECT_PORT |= (1<<LED0);
-		
-		poweroff_led();
-		SEGMENTS_PORT = digits[h2];		
- 114:	90 e0       	ldi	r25, 0x00	; 0
- 116:	fc 01       	movw	r30, r24
- 118:	e0 50       	subi	r30, 0x00	; 0
- 11a:	ff 4f       	sbci	r31, 0xFF	; 255
- 11c:	6f 01       	movw	r12, r30
-		LED_SELECT_PORT |= (1<<LED1);
-		
-		poweroff_led();
-		SEGMENTS_PORT = digits[h3];
- 11e:	8e 2d       	mov	r24, r14
- 120:	90 e0       	ldi	r25, 0x00	; 0
- 122:	9c 01       	movw	r18, r24
- 124:	20 50       	subi	r18, 0x00	; 0
- 126:	3f 4f       	sbci	r19, 0xFF	; 255
- 128:	79 01       	movw	r14, r18
-		LED_SELECT_PORT |= (1<<LED2);
-		
-		poweroff_led();
-		SEGMENTS_PORT = digits[h4];
- 12a:	06 2f       	mov	r16, r22
- 12c:	10 e0       	ldi	r17, 0x00	; 0
- 12e:	00 50       	subi	r16, 0x00	; 0
- 130:	1f 4f       	sbci	r17, 0xFF	; 255
-	h2 = hex1 & 0b00001111;
-	h3 = (hex2>>4) & 0b00001111;
-	h4 = hex2 & 0b00001111;
-	for (uint16_t i=0 ; i<loop ; i+=4)
-	{
-		poweroff_led();
- 132:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-		SEGMENTS_PORT = digits[h1];
- 136:	f5 01       	movw	r30, r10
- 138:	80 81       	ld	r24, Z
- 13a:	8b b9       	out	0x0b, r24	; 11
-		LED_SELECT_PORT |= (1<<LED0);
- 13c:	45 9a       	sbi	0x08, 5	; 8
-		
-		poweroff_led();
- 13e:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-		SEGMENTS_PORT = digits[h2];		
- 142:	f6 01       	movw	r30, r12
- 144:	80 81       	ld	r24, Z
- 146:	8b b9       	out	0x0b, r24	; 11
-		LED_SELECT_PORT |= (1<<LED1);
- 148:	44 9a       	sbi	0x08, 4	; 8
-		
-		poweroff_led();
- 14a:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-		SEGMENTS_PORT = digits[h3];
- 14e:	f7 01       	movw	r30, r14
- 150:	80 81       	ld	r24, Z
- 152:	8b b9       	out	0x0b, r24	; 11
-		LED_SELECT_PORT |= (1<<LED2);
- 154:	43 9a       	sbi	0x08, 3	; 8
-		
-		poweroff_led();
- 156:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-		SEGMENTS_PORT = digits[h4];
- 15a:	f8 01       	movw	r30, r16
- 15c:	80 81       	ld	r24, Z
- 15e:	8b b9       	out	0x0b, r24	; 11
-		LED_SELECT_PORT |= (1<<LED3);
- 160:	42 9a       	sbi	0x08, 2	; 8
-	uint8_t h1, h2, h3, h4;
-	h1 = (hex1>>4) & 0b00001111;
-	h2 = hex1 & 0b00001111;
-	h3 = (hex2>>4) & 0b00001111;
-	h4 = hex2 & 0b00001111;
-	for (uint16_t i=0 ; i<loop ; i+=4)
- 162:	f4 e0       	ldi	r31, 0x04	; 4
- 164:	8f 0e       	add	r8, r31
- 166:	91 1c       	adc	r9, r1
- 168:	8c 16       	cp	r8, r28
- 16a:	9d 06       	cpc	r9, r29
- 16c:	10 f3       	brcs	.-60     	; 0x132 <write_to_led_hex+0x64>
-		
-		poweroff_led();
-		SEGMENTS_PORT = digits[h4];
-		LED_SELECT_PORT |= (1<<LED3);
-	}
-}
- 16e:	df 91       	pop	r29
- 170:	cf 91       	pop	r28
- 172:	1f 91       	pop	r17
- 174:	0f 91       	pop	r16
- 176:	ff 90       	pop	r15
- 178:	ef 90       	pop	r14
- 17a:	df 90       	pop	r13
- 17c:	cf 90       	pop	r12
- 17e:	bf 90       	pop	r11
- 180:	af 90       	pop	r10
- 182:	9f 90       	pop	r9
- 184:	8f 90       	pop	r8
- 186:	08 95       	ret
-
-00000188 <devide_4_digits>:
-
-void devide_4_digits(uint16_t num, uint8_t * d)
-{
- 188:	fb 01       	movw	r30, r22
-	uint8_t d1=0, d2=0, d3=0, d4=0;
-	while (num >= 1000) { num-=1000; d1++; }
- 18a:	88 3e       	cpi	r24, 0xE8	; 232
- 18c:	23 e0       	ldi	r18, 0x03	; 3
- 18e:	92 07       	cpc	r25, r18
- 190:	48 f0       	brcs	.+18     	; 0x1a4 <devide_4_digits+0x1c>
-	}
-}
-
-void devide_4_digits(uint16_t num, uint8_t * d)
-{
-	uint8_t d1=0, d2=0, d3=0, d4=0;
- 192:	40 e0       	ldi	r20, 0x00	; 0
-	while (num >= 1000) { num-=1000; d1++; }
- 194:	88 5e       	subi	r24, 0xE8	; 232
- 196:	93 40       	sbci	r25, 0x03	; 3
- 198:	4f 5f       	subi	r20, 0xFF	; 255
- 19a:	88 3e       	cpi	r24, 0xE8	; 232
- 19c:	23 e0       	ldi	r18, 0x03	; 3
- 19e:	92 07       	cpc	r25, r18
- 1a0:	c8 f7       	brcc	.-14     	; 0x194 <devide_4_digits+0xc>
- 1a2:	01 c0       	rjmp	.+2      	; 0x1a6 <devide_4_digits+0x1e>
-	}
-}
-
-void devide_4_digits(uint16_t num, uint8_t * d)
-{
-	uint8_t d1=0, d2=0, d3=0, d4=0;
- 1a4:	40 e0       	ldi	r20, 0x00	; 0
-	while (num >= 1000) { num-=1000; d1++; }
-	while (num >= 100)	{ num -=100; d2++; }
- 1a6:	84 36       	cpi	r24, 0x64	; 100
- 1a8:	91 05       	cpc	r25, r1
- 1aa:	40 f0       	brcs	.+16     	; 0x1bc <devide_4_digits+0x34>
- 1ac:	50 e0       	ldi	r21, 0x00	; 0
- 1ae:	84 56       	subi	r24, 0x64	; 100
- 1b0:	91 09       	sbc	r25, r1
- 1b2:	5f 5f       	subi	r21, 0xFF	; 255
- 1b4:	84 36       	cpi	r24, 0x64	; 100
- 1b6:	91 05       	cpc	r25, r1
- 1b8:	d0 f7       	brcc	.-12     	; 0x1ae <devide_4_digits+0x26>
- 1ba:	01 c0       	rjmp	.+2      	; 0x1be <devide_4_digits+0x36>
- 1bc:	50 e0       	ldi	r21, 0x00	; 0
-	while (num >= 10)	{ num -= 10; d3++; }
- 1be:	8a 30       	cpi	r24, 0x0A	; 10
- 1c0:	91 05       	cpc	r25, r1
- 1c2:	38 f0       	brcs	.+14     	; 0x1d2 <devide_4_digits+0x4a>
- 1c4:	60 e0       	ldi	r22, 0x00	; 0
- 1c6:	0a 97       	sbiw	r24, 0x0a	; 10
- 1c8:	6f 5f       	subi	r22, 0xFF	; 255
- 1ca:	8a 30       	cpi	r24, 0x0A	; 10
- 1cc:	91 05       	cpc	r25, r1
- 1ce:	d8 f7       	brcc	.-10     	; 0x1c6 <devide_4_digits+0x3e>
- 1d0:	01 c0       	rjmp	.+2      	; 0x1d4 <devide_4_digits+0x4c>
- 1d2:	60 e0       	ldi	r22, 0x00	; 0
-	while (num > 0)		{ num -= 1 ; d4++; }
- 1d4:	00 97       	sbiw	r24, 0x00	; 0
- 1d6:	39 f0       	breq	.+14     	; 0x1e6 <devide_4_digits+0x5e>
- 1d8:	9c 01       	movw	r18, r24
- 1da:	21 50       	subi	r18, 0x01	; 1
- 1dc:	31 09       	sbc	r19, r1
- 1de:	21 15       	cp	r18, r1
- 1e0:	31 05       	cpc	r19, r1
- 1e2:	d9 f7       	brne	.-10     	; 0x1da <devide_4_digits+0x52>
- 1e4:	01 c0       	rjmp	.+2      	; 0x1e8 <devide_4_digits+0x60>
- 1e6:	80 e0       	ldi	r24, 0x00	; 0
-	d[3]=d4; d[2]=d3; d[1]=d2; d[0]=d1;
- 1e8:	83 83       	std	Z+3, r24	; 0x03
- 1ea:	62 83       	std	Z+2, r22	; 0x02
- 1ec:	51 83       	std	Z+1, r21	; 0x01
- 1ee:	40 83       	st	Z, r20
- 1f0:	08 95       	ret
-
-000001f2 <write_to_led>:
-	SEGMENTS_PORT = 0xFF; // + to cathode to power off
-	LED_SELECT_PORT &= ~((1<<LED0) | (1<<LED1) | (1<<LED2) | (1<<LED3)); // 0 to LED ports (0 to Anode)
-}
-
-void write_to_led(uint16_t num, uint8_t digit)
-{
- 1f2:	cf 93       	push	r28
- 1f4:	df 93       	push	r29
- 1f6:	00 d0       	rcall	.+0      	; 0x1f8 <write_to_led+0x6>
- 1f8:	00 d0       	rcall	.+0      	; 0x1fa <write_to_led+0x8>
- 1fa:	cd b7       	in	r28, 0x3d	; 61
- 1fc:	de b7       	in	r29, 0x3e	; 62
-	uint8_t d[4];
-	devide_4_digits(num, d);
- 1fe:	be 01       	movw	r22, r28
- 200:	6f 5f       	subi	r22, 0xFF	; 255
- 202:	7f 4f       	sbci	r23, 0xFF	; 255
- 204:	0e 94 c4 00 	call	0x188	; 0x188 <devide_4_digits>
-
-	poweroff_led();
- 208:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-	SEGMENTS_PORT = digits[d[0]];
- 20c:	e9 81       	ldd	r30, Y+1	; 0x01
- 20e:	f0 e0       	ldi	r31, 0x00	; 0
- 210:	e0 50       	subi	r30, 0x00	; 0
- 212:	ff 4f       	sbci	r31, 0xFF	; 255
- 214:	80 81       	ld	r24, Z
- 216:	8b b9       	out	0x0b, r24	; 11
-	LED_SELECT_PORT |= (1<<LED0);
- 218:	45 9a       	sbi	0x08, 5	; 8
-	poweroff_led();	
- 21a:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-	SEGMENTS_PORT = digits[d[1]];
- 21e:	ea 81       	ldd	r30, Y+2	; 0x02
- 220:	f0 e0       	ldi	r31, 0x00	; 0
- 222:	e0 50       	subi	r30, 0x00	; 0
- 224:	ff 4f       	sbci	r31, 0xFF	; 255
- 226:	80 81       	ld	r24, Z
- 228:	8b b9       	out	0x0b, r24	; 11
-	LED_SELECT_PORT |= (1<<LED1);
- 22a:	44 9a       	sbi	0x08, 4	; 8
-	poweroff_led();	
- 22c:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-	SEGMENTS_PORT = digits[d[2]];
- 230:	eb 81       	ldd	r30, Y+3	; 0x03
- 232:	f0 e0       	ldi	r31, 0x00	; 0
- 234:	e0 50       	subi	r30, 0x00	; 0
- 236:	ff 4f       	sbci	r31, 0xFF	; 255
- 238:	80 81       	ld	r24, Z
- 23a:	8b b9       	out	0x0b, r24	; 11
-	LED_SELECT_PORT |= (1<<LED2);
- 23c:	43 9a       	sbi	0x08, 3	; 8
-	poweroff_led();
- 23e:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-	SEGMENTS_PORT = digits[d[3]];
- 242:	ec 81       	ldd	r30, Y+4	; 0x04
- 244:	f0 e0       	ldi	r31, 0x00	; 0
- 246:	e0 50       	subi	r30, 0x00	; 0
- 248:	ff 4f       	sbci	r31, 0xFF	; 255
- 24a:	80 81       	ld	r24, Z
- 24c:	8b b9       	out	0x0b, r24	; 11
-	LED_SELECT_PORT |= (1<<LED3);
- 24e:	42 9a       	sbi	0x08, 2	; 8
-	poweroff_led();	
- 250:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-}
- 254:	0f 90       	pop	r0
- 256:	0f 90       	pop	r0
- 258:	0f 90       	pop	r0
- 25a:	0f 90       	pop	r0
- 25c:	df 91       	pop	r29
- 25e:	cf 91       	pop	r28
- 260:	08 95       	ret
-
-00000262 <main>:
+000000a6 <main>:
 #include "tx/nrf_ping_TX.h"
 #include "rx/nrf_ping_RX.h"
 
 #define F_CPU 1000000L
 
- 262:	0e 94 e6 02 	call	0x5cc	; 0x5cc <main_rx>
- 266:	08 95       	ret
+  a6:	0e 94 e9 02 	call	0x5d2	; 0x5d2 <main_tx>
+  aa:	08 95       	ret
 
-00000268 <init_button>:
-
-uint8_t btn_last, btn_prssed, leg, pin;
-
-void init_button()
-{
-	TST_BTN_DDR &= ~(1<<TST_BTN_LEG);
- 268:	26 98       	cbi	0x04, 6	; 4
-	TST_BTN_PORT |= (1<<TST_BTN_LEG);
- 26a:	2e 9a       	sbi	0x05, 6	; 5
-	btn_prssed=0;
- 26c:	10 92 1b 01 	sts	0x011B, r1
-	btn_last=0;
- 270:	10 92 1c 01 	sts	0x011C, r1
- 274:	08 95       	ret
-
-00000276 <nrf_init>:
+000000ac <nrf_init>:
 uint8_t TX_PIPE[5] = {0xf1, 0xf1, 0xf1, 0xf1, 0xf1};
 
 void nrf_init()
 // Init NRF - call at start
 {
 	NRF_DDR |= ((1<<CSN)|(1<<CE));	
- 276:	84 b1       	in	r24, 0x04	; 4
- 278:	83 60       	ori	r24, 0x03	; 3
- 27a:	84 b9       	out	0x04, r24	; 4
+  ac:	84 b1       	in	r24, 0x04	; 4
+  ae:	83 60       	ori	r24, 0x03	; 3
+  b0:	84 b9       	out	0x04, r24	; 4
 	spi_init();	
- 27c:	0e 94 eb 02 	call	0x5d6	; 0x5d6 <spi_init>
+  b2:	0e 94 1e 02 	call	0x43c	; 0x43c <spi_init>
 	nrf_CE_lo;
- 280:	28 98       	cbi	0x05, 0	; 5
+  b6:	28 98       	cbi	0x05, 0	; 5
 	nrf_CSN_hi;
- 282:	29 9a       	sbi	0x05, 1	; 5
- 284:	08 95       	ret
+  b8:	29 9a       	sbi	0x05, 1	; 5
+  ba:	08 95       	ret
 
-00000286 <nrf_data_ready>:
+000000bc <nrf_data_ready>:
 }
 
 extern uint8_t nrf_data_ready()
 // Checks if data is available for reading
 {
 	if (PTX) return 0;
- 286:	80 91 1e 01 	lds	r24, 0x011E
- 28a:	81 11       	cpse	r24, r1
- 28c:	07 c0       	rjmp	.+14     	; 0x29c <nrf_data_ready+0x16>
+  bc:	80 91 0e 01 	lds	r24, 0x010E
+  c0:	81 11       	cpse	r24, r1
+  c2:	07 c0       	rjmp	.+14     	; 0xd2 <nrf_data_ready+0x16>
 	uint8_t status;
 	// Read NRF status
 	nrf_CSN_lo;                                // Pull down chip select
- 28e:	29 98       	cbi	0x05, 1	; 5
+  c4:	29 98       	cbi	0x05, 1	; 5
 	status = spi_fast_shift(NOP);               // Read status register
- 290:	8f ef       	ldi	r24, 0xFF	; 255
- 292:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
+  c6:	8f ef       	ldi	r24, 0xFF	; 255
+  c8:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
 	nrf_CSN_hi;                                // Pull up chip select
- 296:	29 9a       	sbi	0x05, 1	; 5
+  cc:	29 9a       	sbi	0x05, 1	; 5
 	return status & (1<<RX_DR);
- 298:	80 74       	andi	r24, 0x40	; 64
- 29a:	08 95       	ret
+  ce:	80 74       	andi	r24, 0x40	; 64
+  d0:	08 95       	ret
 }
 
 extern uint8_t nrf_data_ready()
 // Checks if data is available for reading
 {
 	if (PTX) return 0;
- 29c:	80 e0       	ldi	r24, 0x00	; 0
+  d2:	80 e0       	ldi	r24, 0x00	; 0
 	// Read NRF status
 	nrf_CSN_lo;                                // Pull down chip select
 	status = spi_fast_shift(NOP);               // Read status register
 	nrf_CSN_hi;                                // Pull up chip select
 	return status & (1<<RX_DR);
 }
- 29e:	08 95       	ret
+  d4:	08 95       	ret
 
-000002a0 <nrf_read_register>:
-	nrf_write_register_1(CONFIG, (nrf_CONFIG) | (value));
-}
-
-void nrf_read_register(uint8_t reg, uint8_t * value, uint8_t len)
-// Reads an array of bytes from the given start position in the NRF registers.
-{
- 2a0:	1f 93       	push	r17
- 2a2:	cf 93       	push	r28
- 2a4:	df 93       	push	r29
- 2a6:	d6 2f       	mov	r29, r22
- 2a8:	17 2f       	mov	r17, r23
- 2aa:	c4 2f       	mov	r28, r20
-	for (uint8_t i=0; i< len ; i++) value[i] = NOP;
- 2ac:	44 23       	and	r20, r20
- 2ae:	49 f0       	breq	.+18     	; 0x2c2 <nrf_read_register+0x22>
- 2b0:	46 2f       	mov	r20, r22
- 2b2:	e6 2f       	mov	r30, r22
- 2b4:	f7 2f       	mov	r31, r23
- 2b6:	3f ef       	ldi	r19, 0xFF	; 255
- 2b8:	31 93       	st	Z+, r19
- 2ba:	2e 2f       	mov	r18, r30
- 2bc:	24 1b       	sub	r18, r20
- 2be:	2c 17       	cp	r18, r28
- 2c0:	d8 f3       	brcs	.-10     	; 0x2b8 <nrf_read_register+0x18>
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
-
-	__builtin_avr_delay_cycles(__ticks_dc);
- 2c2:	93 e0       	ldi	r25, 0x03	; 3
- 2c4:	9a 95       	dec	r25
- 2c6:	f1 f7       	brne	.-4      	; 0x2c4 <nrf_read_register+0x24>
- 2c8:	00 00       	nop
-	_delay_us(10);
-	nrf_CSN_lo;
- 2ca:	29 98       	cbi	0x05, 1	; 5
- 2cc:	93 e0       	ldi	r25, 0x03	; 3
- 2ce:	9a 95       	dec	r25
- 2d0:	f1 f7       	brne	.-4      	; 0x2ce <nrf_read_register+0x2e>
- 2d2:	00 00       	nop
-	_delay_us(10);	
-	spi_fast_shift(R_REGISTER | (REGISTER_MASK & reg));
- 2d4:	8f 71       	andi	r24, 0x1F	; 31
- 2d6:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
- 2da:	83 e0       	ldi	r24, 0x03	; 3
- 2dc:	8a 95       	dec	r24
- 2de:	f1 f7       	brne	.-4      	; 0x2dc <nrf_read_register+0x3c>
- 2e0:	00 00       	nop
-	_delay_us(10);	
-	spi_transfer_sync(value, value, len);
- 2e2:	4c 2f       	mov	r20, r28
- 2e4:	6d 2f       	mov	r22, r29
- 2e6:	71 2f       	mov	r23, r17
- 2e8:	8d 2f       	mov	r24, r29
- 2ea:	91 2f       	mov	r25, r17
- 2ec:	0e 94 f9 02 	call	0x5f2	; 0x5f2 <spi_transfer_sync>
- 2f0:	93 e0       	ldi	r25, 0x03	; 3
- 2f2:	9a 95       	dec	r25
- 2f4:	f1 f7       	brne	.-4      	; 0x2f2 <nrf_read_register+0x52>
- 2f6:	00 00       	nop
-	_delay_us(10);	
+000000d6 <nrf_write_register>:
 	nrf_CSN_hi;
- 2f8:	29 9a       	sbi	0x05, 1	; 5
 }
- 2fa:	df 91       	pop	r29
- 2fc:	cf 91       	pop	r28
- 2fe:	1f 91       	pop	r17
- 300:	08 95       	ret
-
-00000302 <nrf_write_register>:
 
 void nrf_write_register(uint8_t reg, uint8_t * value, uint8_t len)
 // Writes an array of bytes into into the NRF registers.
 {
- 302:	1f 93       	push	r17
- 304:	cf 93       	push	r28
- 306:	df 93       	push	r29
- 308:	eb 01       	movw	r28, r22
- 30a:	14 2f       	mov	r17, r20
+  d6:	1f 93       	push	r17
+  d8:	cf 93       	push	r28
+  da:	df 93       	push	r29
+  dc:	eb 01       	movw	r28, r22
+  de:	14 2f       	mov	r17, r20
 	nrf_CSN_lo;
- 30c:	29 98       	cbi	0x05, 1	; 5
+  e0:	29 98       	cbi	0x05, 1	; 5
 	spi_fast_shift(W_REGISTER | (REGISTER_MASK & reg));
- 30e:	8f 71       	andi	r24, 0x1F	; 31
- 310:	80 62       	ori	r24, 0x20	; 32
- 312:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
+  e2:	8f 71       	andi	r24, 0x1F	; 31
+  e4:	80 62       	ori	r24, 0x20	; 32
+  e6:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
 	spi_transmit_sync(value,len);
- 316:	61 2f       	mov	r22, r17
- 318:	ce 01       	movw	r24, r28
- 31a:	0e 94 0c 03 	call	0x618	; 0x618 <spi_transmit_sync>
+  ea:	61 2f       	mov	r22, r17
+  ec:	ce 01       	movw	r24, r28
+  ee:	0e 94 3f 02 	call	0x47e	; 0x47e <spi_transmit_sync>
 	nrf_CSN_hi;
- 31e:	29 9a       	sbi	0x05, 1	; 5
+  f2:	29 9a       	sbi	0x05, 1	; 5
 }
- 320:	df 91       	pop	r29
- 322:	cf 91       	pop	r28
- 324:	1f 91       	pop	r17
- 326:	08 95       	ret
+  f4:	df 91       	pop	r29
+  f6:	cf 91       	pop	r28
+  f8:	1f 91       	pop	r17
+  fa:	08 95       	ret
 
-00000328 <nrf_write_register_1>:
+000000fc <nrf_write_register_1>:
 
 void nrf_write_register_1(uint8_t reg, uint8_t value)
 {
- 328:	cf 93       	push	r28
- 32a:	df 93       	push	r29
- 32c:	1f 92       	push	r1
- 32e:	cd b7       	in	r28, 0x3d	; 61
- 330:	de b7       	in	r29, 0x3e	; 62
+  fc:	cf 93       	push	r28
+  fe:	df 93       	push	r29
+ 100:	1f 92       	push	r1
+ 102:	cd b7       	in	r28, 0x3d	; 61
+ 104:	de b7       	in	r29, 0x3e	; 62
 	uint8_t data[1] = {value};
- 332:	69 83       	std	Y+1, r22	; 0x01
+ 106:	69 83       	std	Y+1, r22	; 0x01
 	nrf_write_register(reg, data, 1);
- 334:	41 e0       	ldi	r20, 0x01	; 1
- 336:	be 01       	movw	r22, r28
- 338:	6f 5f       	subi	r22, 0xFF	; 255
- 33a:	7f 4f       	sbci	r23, 0xFF	; 255
- 33c:	0e 94 81 01 	call	0x302	; 0x302 <nrf_write_register>
+ 108:	41 e0       	ldi	r20, 0x01	; 1
+ 10a:	be 01       	movw	r22, r28
+ 10c:	6f 5f       	subi	r22, 0xFF	; 255
+ 10e:	7f 4f       	sbci	r23, 0xFF	; 255
+ 110:	0e 94 6b 00 	call	0xd6	; 0xd6 <nrf_write_register>
 }
- 340:	0f 90       	pop	r0
- 342:	df 91       	pop	r29
- 344:	cf 91       	pop	r28
- 346:	08 95       	ret
+ 114:	0f 90       	pop	r0
+ 116:	df 91       	pop	r29
+ 118:	cf 91       	pop	r28
+ 11a:	08 95       	ret
 
-00000348 <nrf_flush>:
+0000011c <nrf_flush>:
 
 void nrf_flush()
 // Flush TX and RX FIFOs
 {
 	while (PTX) {} // Not during sending..
- 348:	80 91 1e 01 	lds	r24, 0x011E
- 34c:	81 11       	cpse	r24, r1
- 34e:	fc cf       	rjmp	.-8      	; 0x348 <nrf_flush>
+ 11c:	80 91 0e 01 	lds	r24, 0x010E
+ 120:	81 11       	cpse	r24, r1
+ 122:	fc cf       	rjmp	.-8      	; 0x11c <nrf_flush>
 	nrf_CSN_lo;
- 350:	29 98       	cbi	0x05, 1	; 5
+ 124:	29 98       	cbi	0x05, 1	; 5
 	spi_fast_shift(FLUSH_TX);
- 352:	81 ee       	ldi	r24, 0xE1	; 225
- 354:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
+ 126:	81 ee       	ldi	r24, 0xE1	; 225
+ 128:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
 	nrf_CSN_hi;
- 358:	29 9a       	sbi	0x05, 1	; 5
+ 12c:	29 9a       	sbi	0x05, 1	; 5
 	
 	nrf_CSN_lo;
- 35a:	29 98       	cbi	0x05, 1	; 5
+ 12e:	29 98       	cbi	0x05, 1	; 5
 	spi_fast_shift(FLUSH_RX);
- 35c:	82 ee       	ldi	r24, 0xE2	; 226
- 35e:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
+ 130:	82 ee       	ldi	r24, 0xE2	; 226
+ 132:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
 	nrf_CSN_hi;		
- 362:	29 9a       	sbi	0x05, 1	; 5
- 364:	08 95       	ret
+ 136:	29 9a       	sbi	0x05, 1	; 5
+ 138:	08 95       	ret
 
-00000366 <nrf_get_raw>:
+0000013a <nrf_get_raw>:
 }
 
 void nrf_get_raw(uint8_t * data)
 {
- 366:	cf 93       	push	r28
- 368:	df 93       	push	r29
- 36a:	ec 01       	movw	r28, r24
+ 13a:	cf 93       	push	r28
+ 13c:	df 93       	push	r29
+ 13e:	ec 01       	movw	r28, r24
 	//uint8_t cur_data;
 	nrf_CSN_lo;
- 36c:	29 98       	cbi	0x05, 1	; 5
+ 140:	29 98       	cbi	0x05, 1	; 5
 	spi_fast_shift(R_RX_PAYLOAD);
- 36e:	81 e6       	ldi	r24, 0x61	; 97
- 370:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
+ 142:	81 e6       	ldi	r24, 0x61	; 97
+ 144:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
 	spi_transfer_sync(data, data, nrf_PAYLOAD);   // read payload
- 374:	44 e0       	ldi	r20, 0x04	; 4
- 376:	be 01       	movw	r22, r28
- 378:	ce 01       	movw	r24, r28
- 37a:	0e 94 f9 02 	call	0x5f2	; 0x5f2 <spi_transfer_sync>
+ 148:	46 e0       	ldi	r20, 0x06	; 6
+ 14a:	be 01       	movw	r22, r28
+ 14c:	ce 01       	movw	r24, r28
+ 14e:	0e 94 2c 02 	call	0x458	; 0x458 <spi_transfer_sync>
 	nrf_CSN_hi;
- 37e:	29 9a       	sbi	0x05, 1	; 5
+ 152:	29 9a       	sbi	0x05, 1	; 5
 	RESET_STT;	
- 380:	60 e7       	ldi	r22, 0x70	; 112
- 382:	87 e0       	ldi	r24, 0x07	; 7
- 384:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 154:	60 e7       	ldi	r22, 0x70	; 112
+ 156:	87 e0       	ldi	r24, 0x07	; 7
+ 158:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 }
- 388:	df 91       	pop	r29
- 38a:	cf 91       	pop	r28
- 38c:	08 95       	ret
+ 15c:	df 91       	pop	r29
+ 15e:	cf 91       	pop	r28
+ 160:	08 95       	ret
 
-0000038e <nrf24l01_readregister>:
+00000162 <nrf24l01_readregister>:
 
 uint8_t nrf24l01_readregister(uint8_t reg) {
 	nrf_CSN_lo;
- 38e:	29 98       	cbi	0x05, 1	; 5
+ 162:	29 98       	cbi	0x05, 1	; 5
 	spi_fast_shift(R_REGISTER | (REGISTER_MASK & reg));
- 390:	8f 71       	andi	r24, 0x1F	; 31
- 392:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
+ 164:	8f 71       	andi	r24, 0x1F	; 31
+ 166:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
 	uint8_t result = spi_fast_shift(NOP); //read write register
- 396:	8f ef       	ldi	r24, 0xFF	; 255
- 398:	0e 94 1b 03 	call	0x636	; 0x636 <spi_fast_shift>
+ 16a:	8f ef       	ldi	r24, 0xFF	; 255
+ 16c:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
 	nrf_CSN_hi; //high CSN
- 39c:	29 9a       	sbi	0x05, 1	; 5
+ 170:	29 9a       	sbi	0x05, 1	; 5
 	return result;
 }
- 39e:	08 95       	ret
+ 172:	08 95       	ret
 
-000003a0 <nrf_config>:
+00000174 <nrf_config>:
 	nrf_CSN_hi;
 }
 
 void nrf_config(uint8_t is_tx)
 // Sets the important registers in the NRF module and powers the module
 {
- 3a0:	cf 93       	push	r28
- 3a2:	c8 2f       	mov	r28, r24
+ 174:	cf 93       	push	r28
+ 176:	c8 2f       	mov	r28, r24
 	nrf_write_register_1(SETUP_RETR, 0);
- 3a4:	60 e0       	ldi	r22, 0x00	; 0
- 3a6:	84 e0       	ldi	r24, 0x04	; 4
- 3a8:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 178:	60 e0       	ldi	r22, 0x00	; 0
+ 17a:	84 e0       	ldi	r24, 0x04	; 4
+ 17c:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_write_register_1(RF_CH, nrf_CH);				// Set RF Channel
- 3ac:	62 e0       	ldi	r22, 0x02	; 2
- 3ae:	85 e0       	ldi	r24, 0x05	; 5
- 3b0:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 180:	62 e0       	ldi	r22, 0x02	; 2
+ 182:	85 e0       	ldi	r24, 0x05	; 5
+ 184:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_write_register_1(RX_PW_P0, nrf_PAYLOAD);		// Set Bytes payload
- 3b4:	64 e0       	ldi	r22, 0x04	; 4
- 3b6:	81 e1       	ldi	r24, 0x11	; 17
- 3b8:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 188:	66 e0       	ldi	r22, 0x06	; 6
+ 18a:	81 e1       	ldi	r24, 0x11	; 17
+ 18c:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_write_register_1(RF_SETUP, (0b11<<RF_PWR));		// Set 0dBm and 1MBps
- 3bc:	66 e0       	ldi	r22, 0x06	; 6
- 3be:	86 e0       	ldi	r24, 0x06	; 6
- 3c0:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 190:	66 e0       	ldi	r22, 0x06	; 6
+ 192:	86 e0       	ldi	r24, 0x06	; 6
+ 194:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_write_register_1(EN_AA, 0x00);					// Disable Auto_Ack
- 3c4:	60 e0       	ldi	r22, 0x00	; 0
- 3c6:	81 e0       	ldi	r24, 0x01	; 1
- 3c8:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 198:	60 e0       	ldi	r22, 0x00	; 0
+ 19a:	81 e0       	ldi	r24, 0x01	; 1
+ 19c:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_write_register_1(EN_RXADDR, (1<<ERX_P0));		// Enable only data pipe 0 for RX
- 3cc:	61 e0       	ldi	r22, 0x01	; 1
- 3ce:	82 e0       	ldi	r24, 0x02	; 2
- 3d0:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 1a0:	61 e0       	ldi	r22, 0x01	; 1
+ 1a2:	82 e0       	ldi	r24, 0x02	; 2
+ 1a4:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_write_register_1(SETUP_AW, (0b11<<AW));			// Enable 5 Byte addresses
- 3d4:	63 e0       	ldi	r22, 0x03	; 3
- 3d6:	83 e0       	ldi	r24, 0x03	; 3
- 3d8:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 1a8:	63 e0       	ldi	r22, 0x03	; 3
+ 1aa:	83 e0       	ldi	r24, 0x03	; 3
+ 1ac:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_write_register_1(DYNPD, 0);
- 3dc:	60 e0       	ldi	r22, 0x00	; 0
- 3de:	8c e1       	ldi	r24, 0x1C	; 28
- 3e0:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 1b0:	60 e0       	ldi	r22, 0x00	; 0
+ 1b2:	8c e1       	ldi	r24, 0x1C	; 28
+ 1b4:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	if (is_tx)
- 3e4:	cc 23       	and	r28, r28
- 3e6:	69 f0       	breq	.+26     	; 0x402 <nrf_config+0x62>
+ 1b8:	cc 23       	and	r28, r28
+ 1ba:	69 f0       	breq	.+26     	; 0x1d6 <nrf_config+0x62>
 	{
 		nrf_write_register(RX_ADDR_P0, RX_PIPE, 5);			// Set RX pipe
- 3e8:	45 e0       	ldi	r20, 0x05	; 5
- 3ea:	65 e1       	ldi	r22, 0x15	; 21
- 3ec:	71 e0       	ldi	r23, 0x01	; 1
- 3ee:	8a e0       	ldi	r24, 0x0A	; 10
- 3f0:	0e 94 81 01 	call	0x302	; 0x302 <nrf_write_register>
+ 1bc:	45 e0       	ldi	r20, 0x05	; 5
+ 1be:	65 e0       	ldi	r22, 0x05	; 5
+ 1c0:	71 e0       	ldi	r23, 0x01	; 1
+ 1c2:	8a e0       	ldi	r24, 0x0A	; 10
+ 1c4:	0e 94 6b 00 	call	0xd6	; 0xd6 <nrf_write_register>
 		nrf_write_register(TX_ADDR, TX_PIPE, 5);			// Set TX pipe
- 3f4:	45 e0       	ldi	r20, 0x05	; 5
- 3f6:	60 e1       	ldi	r22, 0x10	; 16
- 3f8:	71 e0       	ldi	r23, 0x01	; 1
- 3fa:	80 e1       	ldi	r24, 0x10	; 16
- 3fc:	0e 94 81 01 	call	0x302	; 0x302 <nrf_write_register>
- 400:	0c c0       	rjmp	.+24     	; 0x41a <nrf_config+0x7a>
+ 1c8:	45 e0       	ldi	r20, 0x05	; 5
+ 1ca:	60 e0       	ldi	r22, 0x00	; 0
+ 1cc:	71 e0       	ldi	r23, 0x01	; 1
+ 1ce:	80 e1       	ldi	r24, 0x10	; 16
+ 1d0:	0e 94 6b 00 	call	0xd6	; 0xd6 <nrf_write_register>
+ 1d4:	0c c0       	rjmp	.+24     	; 0x1ee <nrf_config+0x7a>
 	} else {
 		nrf_write_register(TX_ADDR, RX_PIPE, 5);			// Set RX pipe
- 402:	45 e0       	ldi	r20, 0x05	; 5
- 404:	65 e1       	ldi	r22, 0x15	; 21
- 406:	71 e0       	ldi	r23, 0x01	; 1
- 408:	80 e1       	ldi	r24, 0x10	; 16
- 40a:	0e 94 81 01 	call	0x302	; 0x302 <nrf_write_register>
+ 1d6:	45 e0       	ldi	r20, 0x05	; 5
+ 1d8:	65 e0       	ldi	r22, 0x05	; 5
+ 1da:	71 e0       	ldi	r23, 0x01	; 1
+ 1dc:	80 e1       	ldi	r24, 0x10	; 16
+ 1de:	0e 94 6b 00 	call	0xd6	; 0xd6 <nrf_write_register>
 		nrf_write_register(RX_ADDR_P0, TX_PIPE, 5);			// Set TX pipe
- 40e:	45 e0       	ldi	r20, 0x05	; 5
- 410:	60 e1       	ldi	r22, 0x10	; 16
- 412:	71 e0       	ldi	r23, 0x01	; 1
- 414:	8a e0       	ldi	r24, 0x0A	; 10
- 416:	0e 94 81 01 	call	0x302	; 0x302 <nrf_write_register>
+ 1e2:	45 e0       	ldi	r20, 0x05	; 5
+ 1e4:	60 e0       	ldi	r22, 0x00	; 0
+ 1e6:	71 e0       	ldi	r23, 0x01	; 1
+ 1e8:	8a e0       	ldi	r24, 0x0A	; 10
+ 1ea:	0e 94 6b 00 	call	0xd6	; 0xd6 <nrf_write_register>
 	}
 	RX_POWERUP;     // Power up in receiving mode
- 41a:	80 e0       	ldi	r24, 0x00	; 0
- 41c:	0e 94 c7 01 	call	0x38e	; 0x38e <nrf24l01_readregister>
- 420:	68 2f       	mov	r22, r24
- 422:	63 67       	ori	r22, 0x73	; 115
- 424:	80 e0       	ldi	r24, 0x00	; 0
- 426:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 1ee:	80 e0       	ldi	r24, 0x00	; 0
+ 1f0:	0e 94 b1 00 	call	0x162	; 0x162 <nrf24l01_readregister>
+ 1f4:	68 2f       	mov	r22, r24
+ 1f6:	63 67       	ori	r22, 0x73	; 115
+ 1f8:	80 e0       	ldi	r24, 0x00	; 0
+ 1fa:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	RESET_STT;											// Reset all IRQ flags on Status
- 42a:	60 e7       	ldi	r22, 0x70	; 112
- 42c:	87 e0       	ldi	r24, 0x07	; 7
- 42e:	0e 94 94 01 	call	0x328	; 0x328 <nrf_write_register_1>
+ 1fe:	60 e7       	ldi	r22, 0x70	; 112
+ 200:	87 e0       	ldi	r24, 0x07	; 7
+ 202:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
 	nrf_flush();										// Flush RX and TX FIFO's
- 432:	0e 94 a4 01 	call	0x348	; 0x348 <nrf_flush>
+ 206:	0e 94 8e 00 	call	0x11c	; 0x11c <nrf_flush>
 
 	// Start receiver
 	PTX = 0;        // Start in receiving mode
- 436:	10 92 1e 01 	sts	0x011E, r1
+ 20a:	10 92 0e 01 	sts	0x010E, r1
 	nrf_CE_hi;      // start Listening
- 43a:	28 9a       	sbi	0x05, 0	; 5
+ 20e:	28 9a       	sbi	0x05, 0	; 5
 }
- 43c:	cf 91       	pop	r28
- 43e:	08 95       	ret
+ 210:	cf 91       	pop	r28
+ 212:	08 95       	ret
 
-00000440 <nrf_get>:
-	PORTC &= ~(1<<PC0);	
-	nrf_send_raw(raw);
-}
-
-uint8_t nrf_get(uint8_t my_id, uint8_t * data)
-{
- 440:	ff 92       	push	r15
- 442:	0f 93       	push	r16
- 444:	1f 93       	push	r17
- 446:	cf 93       	push	r28
- 448:	df 93       	push	r29
- 44a:	00 d0       	rcall	.+0      	; 0x44c <nrf_get+0xc>
- 44c:	00 d0       	rcall	.+0      	; 0x44e <nrf_get+0xe>
- 44e:	cd b7       	in	r28, 0x3d	; 61
- 450:	de b7       	in	r29, 0x3e	; 62
- 452:	f8 2e       	mov	r15, r24
- 454:	8b 01       	movw	r16, r22
-	uint8_t valid = 0;
-	
-	// Reset data to 0
-	for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) { data[i] = 0; }
- 456:	fb 01       	movw	r30, r22
- 458:	10 82       	st	Z, r1
- 45a:	11 82       	std	Z+1, r1	; 0x01
-	
-	// Check if we have data 
-	if (nrf_data_ready())
- 45c:	0e 94 43 01 	call	0x286	; 0x286 <nrf_data_ready>
- 460:	88 23       	and	r24, r24
- 462:	c9 f0       	breq	.+50     	; 0x496 <nrf_get+0x56>
-	{
-		uint8_t raw[nrf_PAYLOAD];
-		nrf_get_raw(raw);
- 464:	ce 01       	movw	r24, r28
- 466:	01 96       	adiw	r24, 0x01	; 1
- 468:	0e 94 b3 01 	call	0x366	; 0x366 <nrf_get_raw>
-		if (raw[0] == my_id)
- 46c:	89 81       	ldd	r24, Y+1	; 0x01
- 46e:	8f 11       	cpse	r24, r15
- 470:	0e c0       	rjmp	.+28     	; 0x48e <nrf_get+0x4e>
-		{
-			uint8_t xor = my_id;
-			for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) { xor ^= raw[i+1]; }
- 472:	8a 81       	ldd	r24, Y+2	; 0x02
- 474:	f8 26       	eor	r15, r24
- 476:	8b 81       	ldd	r24, Y+3	; 0x03
- 478:	f8 26       	eor	r15, r24
-			if (xor == raw[nrf_PAYLOAD - 1])
- 47a:	8c 81       	ldd	r24, Y+4	; 0x04
- 47c:	f8 12       	cpse	r15, r24
- 47e:	09 c0       	rjmp	.+18     	; 0x492 <nrf_get+0x52>
-			{
-				for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) { data[i] = raw[i+1]; }			
- 480:	8a 81       	ldd	r24, Y+2	; 0x02
- 482:	f8 01       	movw	r30, r16
- 484:	80 83       	st	Z, r24
- 486:	8b 81       	ldd	r24, Y+3	; 0x03
- 488:	81 83       	std	Z+1, r24	; 0x01
-				valid = 1;
- 48a:	81 e0       	ldi	r24, 0x01	; 1
- 48c:	05 c0       	rjmp	.+10     	; 0x498 <nrf_get+0x58>
-	nrf_send_raw(raw);
+00000214 <nrf_send_raw>:
+	nrf_CSN_hi; //high CSN
+	return result;
 }
 
-uint8_t nrf_get(uint8_t my_id, uint8_t * data)
-{
-	uint8_t valid = 0;
- 48e:	80 e0       	ldi	r24, 0x00	; 0
- 490:	03 c0       	rjmp	.+6      	; 0x498 <nrf_get+0x58>
- 492:	80 e0       	ldi	r24, 0x00	; 0
- 494:	01 c0       	rjmp	.+2      	; 0x498 <nrf_get+0x58>
- 496:	80 e0       	ldi	r24, 0x00	; 0
-				valid = 1;
-			}
-		}
-	}
-	return valid;
- 498:	0f 90       	pop	r0
- 49a:	0f 90       	pop	r0
- 49c:	0f 90       	pop	r0
- 49e:	0f 90       	pop	r0
- 4a0:	df 91       	pop	r29
- 4a2:	cf 91       	pop	r28
- 4a4:	1f 91       	pop	r17
- 4a6:	0f 91       	pop	r16
- 4a8:	ff 90       	pop	r15
- 4aa:	08 95       	ret
-
-000004ac <setup_rx>:
-	
-uint16_t count;
-uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
-
-void setup_rx()
-{
- 4ac:	bf 92       	push	r11
- 4ae:	cf 92       	push	r12
- 4b0:	df 92       	push	r13
- 4b2:	ef 92       	push	r14
- 4b4:	ff 92       	push	r15
- 4b6:	0f 93       	push	r16
- 4b8:	1f 93       	push	r17
- 4ba:	cf 93       	push	r28
- 4bc:	df 93       	push	r29
- 4be:	00 d0       	rcall	.+0      	; 0x4c0 <setup_rx+0x14>
- 4c0:	00 d0       	rcall	.+0      	; 0x4c2 <setup_rx+0x16>
- 4c2:	00 d0       	rcall	.+0      	; 0x4c4 <setup_rx+0x18>
- 4c4:	cd b7       	in	r28, 0x3d	; 61
- 4c6:	de b7       	in	r29, 0x3e	; 62
- 	nrf_init();
- 4c8:	0e 94 3b 01 	call	0x276	; 0x276 <nrf_init>
+void nrf_send_raw(uint8_t * value)
+{	
+ 214:	cf 93       	push	r28
+ 216:	df 93       	push	r29
+ 218:	ec 01       	movw	r28, r24
+	while (PTX) {}
+ 21a:	80 91 0e 01 	lds	r24, 0x010E
+ 21e:	81 11       	cpse	r24, r1
+ 220:	fc cf       	rjmp	.-8      	; 0x21a <nrf_send_raw+0x6>
+		
+	nrf_CE_lo;
+ 222:	28 98       	cbi	0x05, 0	; 5
+	TX_POWERUP;
+ 224:	0e 94 b1 00 	call	0x162	; 0x162 <nrf24l01_readregister>
+ 228:	68 2f       	mov	r22, r24
+ 22a:	62 67       	ori	r22, 0x72	; 114
+ 22c:	80 e0       	ldi	r24, 0x00	; 0
+ 22e:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
+ 232:	80 e0       	ldi	r24, 0x00	; 0
+ 234:	0e 94 b1 00 	call	0x162	; 0x162 <nrf24l01_readregister>
+ 238:	8e 78       	andi	r24, 0x8E	; 142
+ 23a:	68 2f       	mov	r22, r24
+ 23c:	60 67       	ori	r22, 0x70	; 112
+ 23e:	80 e0       	ldi	r24, 0x00	; 0
+ 240:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
+	RESET_STT;
+ 244:	60 e7       	ldi	r22, 0x70	; 112
+ 246:	87 e0       	ldi	r24, 0x07	; 7
+ 248:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
+	nrf_CSN_lo;
+ 24c:	29 98       	cbi	0x05, 1	; 5
+	spi_fast_shift(FLUSH_TX);
+ 24e:	81 ee       	ldi	r24, 0xE1	; 225
+ 250:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
+	nrf_CSN_hi;
+ 254:	29 9a       	sbi	0x05, 1	; 5
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 4cc:	83 ec       	ldi	r24, 0xC3	; 195
- 4ce:	99 e0       	ldi	r25, 0x09	; 9
- 4d0:	01 97       	sbiw	r24, 0x01	; 1
- 4d2:	f1 f7       	brne	.-4      	; 0x4d0 <setup_rx+0x24>
- 4d4:	00 c0       	rjmp	.+0      	; 0x4d6 <setup_rx+0x2a>
- 4d6:	00 00       	nop
- 	_delay_ms(10);
- 	nrf_config(0);
- 4d8:	80 e0       	ldi	r24, 0x00	; 0
- 4da:	0e 94 d0 01 	call	0x3a0	; 0x3a0 <nrf_config>
-	init_button();
- 4de:	0e 94 34 01 	call	0x268	; 0x268 <init_button>
-	led_screen_init();
- 4e2:	0e 94 5f 00 	call	0xbe	; 0xbe <led_screen_init>
-	DDRC |= (1<<PC0);
- 4e6:	38 9a       	sbi	0x07, 0	; 7
-	PORTC &= ~(1<<PC0);
- 4e8:	40 98       	cbi	0x08, 0	; 8
-	count = 0;
- 4ea:	10 92 22 01 	sts	0x0122, r1
- 4ee:	10 92 21 01 	sts	0x0121, r1
-	uint8_t reg_val1, val1=0, val2=0;
-	uint8_t reg_val5[5];
-	for (uint8_t i=0 ; i<=0x17 ; i+=2)
- 4f2:	b1 2c       	mov	r11, r1
- 4f4:	e1 2c       	mov	r14, r1
-	init_button();
-	led_screen_init();
-	DDRC |= (1<<PC0);
-	PORTC &= ~(1<<PC0);
-	count = 0;
-	uint8_t reg_val1, val1=0, val2=0;
- 4f6:	d1 2c       	mov	r13, r1
- 4f8:	c1 2c       	mov	r12, r1
- 4fa:	35 c0       	rjmp	.+106    	; 0x566 <setup_rx+0xba>
-	uint8_t reg_val5[5];
-	for (uint8_t i=0 ; i<=0x17 ; i+=2)
-	{
-		for (uint8_t j = i ; j<i+2 ; j++)
-		{
-			poweroff_led();
- 4fc:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
- 500:	96 ef       	ldi	r25, 0xF6	; 246
- 502:	9f 0d       	add	r25, r15
-			if (j == 0x0A || j == 0x0B || j == 0x10)
- 504:	92 30       	cpi	r25, 0x02	; 2
- 506:	18 f0       	brcs	.+6      	; 0x50e <setup_rx+0x62>
- 508:	90 e1       	ldi	r25, 0x10	; 16
- 50a:	f9 12       	cpse	r15, r25
- 50c:	0a c0       	rjmp	.+20     	; 0x522 <setup_rx+0x76>
-			{
-				nrf_read_register(j, reg_val5, 5) ;
- 50e:	45 e0       	ldi	r20, 0x05	; 5
- 510:	be 01       	movw	r22, r28
- 512:	6e 5f       	subi	r22, 0xFE	; 254
- 514:	7f 4f       	sbci	r23, 0xFF	; 255
- 516:	8f 2d       	mov	r24, r15
- 518:	0e 94 50 01 	call	0x2a0	; 0x2a0 <nrf_read_register>
-				reg_val1 = reg_val5[4];
- 51c:	9e 81       	ldd	r25, Y+6	; 0x06
- 51e:	99 83       	std	Y+1, r25	; 0x01
- 520:	07 c0       	rjmp	.+14     	; 0x530 <setup_rx+0x84>
-			}
-			else
-				nrf_read_register(j, &reg_val1, 1);
- 522:	41 e0       	ldi	r20, 0x01	; 1
- 524:	be 01       	movw	r22, r28
- 526:	6f 5f       	subi	r22, 0xFF	; 255
- 528:	7f 4f       	sbci	r23, 0xFF	; 255
- 52a:	8f 2d       	mov	r24, r15
- 52c:	0e 94 50 01 	call	0x2a0	; 0x2a0 <nrf_read_register>
-			if (j==i) val1=reg_val1;
- 530:	ef 10       	cpse	r14, r15
- 532:	02 c0       	rjmp	.+4      	; 0x538 <setup_rx+0x8c>
- 534:	c9 80       	ldd	r12, Y+1	; 0x01
- 536:	01 c0       	rjmp	.+2      	; 0x53a <setup_rx+0x8e>
-			else val2=reg_val1;
- 538:	d9 80       	ldd	r13, Y+1	; 0x01
-	count = 0;
-	uint8_t reg_val1, val1=0, val2=0;
-	uint8_t reg_val5[5];
-	for (uint8_t i=0 ; i<=0x17 ; i+=2)
-	{
-		for (uint8_t j = i ; j<i+2 ; j++)
- 53a:	f3 94       	inc	r15
- 53c:	2f 2d       	mov	r18, r15
- 53e:	30 e0       	ldi	r19, 0x00	; 0
- 540:	20 17       	cp	r18, r16
- 542:	31 07       	cpc	r19, r17
- 544:	dc f2       	brlt	.-74     	; 0x4fc <setup_rx+0x50>
-			else
-				nrf_read_register(j, &reg_val1, 1);
-			if (j==i) val1=reg_val1;
-			else val2=reg_val1;
-		}
-		write_to_led_hex(val1, val2, 400);		
- 546:	40 e9       	ldi	r20, 0x90	; 144
- 548:	51 e0       	ldi	r21, 0x01	; 1
- 54a:	6d 2d       	mov	r22, r13
- 54c:	8c 2d       	mov	r24, r12
- 54e:	0e 94 67 00 	call	0xce	; 0xce <write_to_led_hex>
-		poweroff_led();
- 552:	0e 94 53 00 	call	0xa6	; 0xa6 <poweroff_led>
-	DDRC |= (1<<PC0);
-	PORTC &= ~(1<<PC0);
-	count = 0;
-	uint8_t reg_val1, val1=0, val2=0;
-	uint8_t reg_val5[5];
-	for (uint8_t i=0 ; i<=0x17 ; i+=2)
- 556:	68 94       	set
- 558:	ee 24       	eor	r14, r14
- 55a:	e1 f8       	bld	r14, 1
- 55c:	eb 0c       	add	r14, r11
- 55e:	88 e1       	ldi	r24, 0x18	; 24
- 560:	e8 16       	cp	r14, r24
- 562:	59 f0       	breq	.+22     	; 0x57a <setup_rx+0xce>
- 564:	be 2c       	mov	r11, r14
-	{
-		for (uint8_t j = i ; j<i+2 ; j++)
- 566:	2e 2d       	mov	r18, r14
- 568:	30 e0       	ldi	r19, 0x00	; 0
- 56a:	89 01       	movw	r16, r18
- 56c:	0e 5f       	subi	r16, 0xFE	; 254
- 56e:	1f 4f       	sbci	r17, 0xFF	; 255
- 570:	20 17       	cp	r18, r16
- 572:	31 07       	cpc	r19, r17
- 574:	44 f7       	brge	.-48     	; 0x546 <setup_rx+0x9a>
- 576:	fe 2c       	mov	r15, r14
- 578:	c1 cf       	rjmp	.-126    	; 0x4fc <setup_rx+0x50>
-			else val2=reg_val1;
-		}
-		write_to_led_hex(val1, val2, 400);		
-		poweroff_led();
-	}
+ 256:	82 e3       	ldi	r24, 0x32	; 50
+ 258:	8a 95       	dec	r24
+ 25a:	f1 f7       	brne	.-4      	; 0x258 <nrf_send_raw+0x44>
+	_delay_us(150);
+		
+	nrf_CSN_lo;                    // Pull down chip select
+ 25c:	29 98       	cbi	0x05, 1	; 5
+	spi_fast_shift( W_TX_PAYLOAD ); // Write cmd to write payload
+ 25e:	80 ea       	ldi	r24, 0xA0	; 160
+ 260:	0e 94 4e 02 	call	0x49c	; 0x49c <spi_fast_shift>
+	spi_transmit_sync(value, nrf_PAYLOAD);
+ 264:	66 e0       	ldi	r22, 0x06	; 6
+ 266:	ce 01       	movw	r24, r28
+ 268:	0e 94 3f 02 	call	0x47e	; 0x47e <spi_transmit_sync>
+	nrf_CSN_hi;                    // Pull up chip select
+ 26c:	29 9a       	sbi	0x05, 1	; 5
+	
+	nrf_CE_hi;
+ 26e:	28 9a       	sbi	0x05, 0	; 5
+ 270:	95 e0       	ldi	r25, 0x05	; 5
+ 272:	9a 95       	dec	r25
+ 274:	f1 f7       	brne	.-4      	; 0x272 <nrf_send_raw+0x5e>
+	_delay_us(15);                   // Start transmission
+	nrf_CE_lo;
+ 276:	28 98       	cbi	0x05, 0	; 5
+
+	POWERDN;
+ 278:	80 e0       	ldi	r24, 0x00	; 0
+ 27a:	0e 94 b1 00 	call	0x162	; 0x162 <nrf24l01_readregister>
+ 27e:	68 2f       	mov	r22, r24
+ 280:	6d 7f       	andi	r22, 0xFD	; 253
+ 282:	80 e0       	ldi	r24, 0x00	; 0
+ 284:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
+	
+	RX_POWERUP;
+ 288:	80 e0       	ldi	r24, 0x00	; 0
+ 28a:	0e 94 b1 00 	call	0x162	; 0x162 <nrf24l01_readregister>
+ 28e:	68 2f       	mov	r22, r24
+ 290:	63 67       	ori	r22, 0x73	; 115
+ 292:	80 e0       	ldi	r24, 0x00	; 0
+ 294:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
+	RESET_STT;
+ 298:	60 e7       	ldi	r22, 0x70	; 112
+ 29a:	87 e0       	ldi	r24, 0x07	; 7
+ 29c:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
+	nrf_flush();
+ 2a0:	0e 94 8e 00 	call	0x11c	; 0x11c <nrf_flush>
+	nrf_CE_hi;
+ 2a4:	28 9a       	sbi	0x05, 0	; 5
+ 2a6:	82 e3       	ldi	r24, 0x32	; 50
+ 2a8:	8a 95       	dec	r24
+ 2aa:	f1 f7       	brne	.-4      	; 0x2a8 <nrf_send_raw+0x94>
+	_delay_us(150);
+	
+	PORTC|=(1<<PC0);
+ 2ac:	40 9a       	sbi	0x08, 0	; 8
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 2ae:	87 ea       	ldi	r24, 0xA7	; 167
+ 2b0:	91 e6       	ldi	r25, 0x61	; 97
+ 2b2:	01 97       	sbiw	r24, 0x01	; 1
+ 2b4:	f1 f7       	brne	.-4      	; 0x2b2 <nrf_send_raw+0x9e>
+ 2b6:	00 c0       	rjmp	.+0      	; 0x2b8 <nrf_send_raw+0xa4>
+ 2b8:	00 00       	nop
+	_delay_ms(100);
+	PORTC&=~(1<<PC0);
+ 2ba:	40 98       	cbi	0x08, 0	; 8
+	nrf_CSN_hi;
+ 2bc:	29 9a       	sbi	0x05, 1	; 5
 }
- 57a:	26 96       	adiw	r28, 0x06	; 6
- 57c:	0f b6       	in	r0, 0x3f	; 63
- 57e:	f8 94       	cli
- 580:	de bf       	out	0x3e, r29	; 62
- 582:	0f be       	out	0x3f, r0	; 63
- 584:	cd bf       	out	0x3d, r28	; 61
- 586:	df 91       	pop	r29
- 588:	cf 91       	pop	r28
- 58a:	1f 91       	pop	r17
- 58c:	0f 91       	pop	r16
- 58e:	ff 90       	pop	r15
- 590:	ef 90       	pop	r14
- 592:	df 90       	pop	r13
- 594:	cf 90       	pop	r12
- 596:	bf 90       	pop	r11
- 598:	08 95       	ret
+ 2be:	df 91       	pop	r29
+ 2c0:	cf 91       	pop	r28
+ 2c2:	08 95       	ret
 
-0000059a <loop_rx>:
+000002c4 <nrf_powerdown>:
 
-void loop_rx()
+void nrf_powerdown()
 {
-	while (!nrf_get(MY_ID, data)) {write_to_led(count, 0);}
- 59a:	07 c0       	rjmp	.+14     	; 0x5aa <loop_rx+0x10>
- 59c:	60 e0       	ldi	r22, 0x00	; 0
- 59e:	80 91 21 01 	lds	r24, 0x0121
- 5a2:	90 91 22 01 	lds	r25, 0x0122
- 5a6:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <write_to_led>
- 5aa:	6f e1       	ldi	r22, 0x1F	; 31
- 5ac:	71 e0       	ldi	r23, 0x01	; 1
- 5ae:	81 e0       	ldi	r24, 0x01	; 1
- 5b0:	0e 94 20 02 	call	0x440	; 0x440 <nrf_get>
- 5b4:	88 23       	and	r24, r24
- 5b6:	91 f3       	breq	.-28     	; 0x59c <loop_rx+0x2>
-	if (data[0]) count = data[0];
- 5b8:	80 91 1f 01 	lds	r24, 0x011F
- 5bc:	88 23       	and	r24, r24
- 5be:	29 f0       	breq	.+10     	; 0x5ca <loop_rx+0x30>
- 5c0:	90 e0       	ldi	r25, 0x00	; 0
- 5c2:	90 93 22 01 	sts	0x0122, r25
- 5c6:	80 93 21 01 	sts	0x0121, r24
- 5ca:	08 95       	ret
+    POWERDN;
+ 2c4:	80 e0       	ldi	r24, 0x00	; 0
+ 2c6:	0e 94 b1 00 	call	0x162	; 0x162 <nrf24l01_readregister>
+ 2ca:	68 2f       	mov	r22, r24
+ 2cc:	6d 7f       	andi	r22, 0xFD	; 253
+ 2ce:	80 e0       	ldi	r24, 0x00	; 0
+ 2d0:	0e 94 7e 00 	call	0xfc	; 0xfc <nrf_write_register_1>
+ 2d4:	08 95       	ret
 
-000005cc <main_rx>:
+000002d6 <build_xor>:
+	uint8_t raw[nrf_PAYLOAD];
+    build_nrf_payload(from, to, seq, MY_ACK, raw);
 }
 
- 5cc:	0e 94 56 02 	call	0x4ac	; 0x4ac <setup_rx>
- 5d0:	0e 94 cd 02 	call	0x59a	; 0x59a <loop_rx>
- 5d4:	fd cf       	rjmp	.-6      	; 0x5d0 <main_rx+0x4>
+uint8_t build_xor(uint8_t * data)
+{
+ 2d6:	fc 01       	movw	r30, r24
+ 2d8:	95 e0       	ldi	r25, 0x05	; 5
+    uint8_t xor = 0;
+ 2da:	80 e0       	ldi	r24, 0x00	; 0
+    for (uint8_t i = 0 ; i<nrf_PAYLOAD-1 ; i++) xor ^= data[i];
+ 2dc:	21 91       	ld	r18, Z+
+ 2de:	82 27       	eor	r24, r18
+ 2e0:	91 50       	subi	r25, 0x01	; 1
+ 2e2:	e1 f7       	brne	.-8      	; 0x2dc <build_xor+0x6>
+    return xor;
+}
+ 2e4:	08 95       	ret
 
-000005d6 <spi_init>:
+000002e6 <build_nrf_payload>:
+
+void build_nrf_payload(uint8_t from, uint8_t to, uint8_t seq, uint8_t * data, uint8_t * raw)
+{
+ 2e6:	0f 93       	push	r16
+ 2e8:	1f 93       	push	r17
+ 2ea:	cf 93       	push	r28
+ 2ec:	df 93       	push	r29
+ 2ee:	e8 01       	movw	r28, r16
+    raw[FROM_ID_BYTE] = from;
+ 2f0:	88 83       	st	Y, r24
+	raw[TO_ID_BYTE] = to;
+ 2f2:	69 83       	std	Y+1, r22	; 0x01
+    raw[SEQ_BYTE] = seq;
+ 2f4:	4a 83       	std	Y+2, r20	; 0x02
+	for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) raw[i+DATA_BYTE] = data[i];
+ 2f6:	f9 01       	movw	r30, r18
+ 2f8:	80 81       	ld	r24, Z
+ 2fa:	8b 83       	std	Y+3, r24	; 0x03
+ 2fc:	81 81       	ldd	r24, Z+1	; 0x01
+ 2fe:	8c 83       	std	Y+4, r24	; 0x04
+    raw[XOR_BYTE] = build_xor(raw);
+ 300:	c8 01       	movw	r24, r16
+ 302:	0e 94 6b 01 	call	0x2d6	; 0x2d6 <build_xor>
+ 306:	8d 83       	std	Y+5, r24	; 0x05
+}
+ 308:	df 91       	pop	r29
+ 30a:	cf 91       	pop	r28
+ 30c:	1f 91       	pop	r17
+ 30e:	0f 91       	pop	r16
+ 310:	08 95       	ret
+
+00000312 <nrf_send_ack>:
+uint8_t tx_seq = 0;
+uint8_t MY_ACK[DATA_PAYLOAD] = {0b10000000, 0b10000001};
+uint8_t tmp_data[DATA_PAYLOAD];
+
+void nrf_send_ack(uint8_t from, uint8_t to, uint8_t seq)
+{
+ 312:	0f 93       	push	r16
+ 314:	1f 93       	push	r17
+ 316:	cf 93       	push	r28
+ 318:	df 93       	push	r29
+ 31a:	00 d0       	rcall	.+0      	; 0x31c <nrf_send_ack+0xa>
+ 31c:	00 d0       	rcall	.+0      	; 0x31e <nrf_send_ack+0xc>
+ 31e:	00 d0       	rcall	.+0      	; 0x320 <nrf_send_ack+0xe>
+ 320:	cd b7       	in	r28, 0x3d	; 61
+ 322:	de b7       	in	r29, 0x3e	; 62
+	uint8_t raw[nrf_PAYLOAD];
+    build_nrf_payload(from, to, seq, MY_ACK, raw);
+ 324:	8e 01       	movw	r16, r28
+ 326:	0f 5f       	subi	r16, 0xFF	; 255
+ 328:	1f 4f       	sbci	r17, 0xFF	; 255
+ 32a:	2a e0       	ldi	r18, 0x0A	; 10
+ 32c:	31 e0       	ldi	r19, 0x01	; 1
+ 32e:	0e 94 73 01 	call	0x2e6	; 0x2e6 <build_nrf_payload>
+}
+ 332:	26 96       	adiw	r28, 0x06	; 6
+ 334:	0f b6       	in	r0, 0x3f	; 63
+ 336:	f8 94       	cli
+ 338:	de bf       	out	0x3e, r29	; 62
+ 33a:	0f be       	out	0x3f, r0	; 63
+ 33c:	cd bf       	out	0x3d, r28	; 61
+ 33e:	df 91       	pop	r29
+ 340:	cf 91       	pop	r28
+ 342:	1f 91       	pop	r17
+ 344:	0f 91       	pop	r16
+ 346:	08 95       	ret
+
+00000348 <nrf_get>:
+    }
+    return (0);
+}
+
+uint8_t nrf_get(uint8_t my_id, uint8_t * data)
+{
+ 348:	ef 92       	push	r14
+ 34a:	ff 92       	push	r15
+ 34c:	0f 93       	push	r16
+ 34e:	1f 93       	push	r17
+ 350:	cf 93       	push	r28
+ 352:	df 93       	push	r29
+ 354:	00 d0       	rcall	.+0      	; 0x356 <nrf_get+0xe>
+ 356:	00 d0       	rcall	.+0      	; 0x358 <nrf_get+0x10>
+ 358:	00 d0       	rcall	.+0      	; 0x35a <nrf_get+0x12>
+ 35a:	cd b7       	in	r28, 0x3d	; 61
+ 35c:	de b7       	in	r29, 0x3e	; 62
+ 35e:	f8 2e       	mov	r15, r24
+ 360:	8b 01       	movw	r16, r22
+	uint8_t valid = 0;
+	
+	// Check if we have data 
+	if (nrf_data_ready())
+ 362:	0e 94 5e 00 	call	0xbc	; 0xbc <nrf_data_ready>
+ 366:	88 23       	and	r24, r24
+ 368:	f1 f0       	breq	.+60     	; 0x3a6 <nrf_get+0x5e>
+	{
+		uint8_t raw[nrf_PAYLOAD];
+		nrf_get_raw(raw);
+ 36a:	ce 01       	movw	r24, r28
+ 36c:	01 96       	adiw	r24, 0x01	; 1
+ 36e:	0e 94 9d 00 	call	0x13a	; 0x13a <nrf_get_raw>
+		if (raw[TO_ID_BYTE] == my_id)
+ 372:	ea 80       	ldd	r14, Y+2	; 0x02
+ 374:	ef 10       	cpse	r14, r15
+ 376:	13 c0       	rjmp	.+38     	; 0x39e <nrf_get+0x56>
+		{
+			uint8_t xor = build_xor(raw);
+ 378:	ce 01       	movw	r24, r28
+ 37a:	01 96       	adiw	r24, 0x01	; 1
+ 37c:	0e 94 6b 01 	call	0x2d6	; 0x2d6 <build_xor>
+			if (xor == raw[XOR_BYTE])
+ 380:	9e 81       	ldd	r25, Y+6	; 0x06
+ 382:	98 13       	cpse	r25, r24
+ 384:	0e c0       	rjmp	.+28     	; 0x3a2 <nrf_get+0x5a>
+			{
+				for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) data[i] = raw[i+DATA_BYTE];
+ 386:	8c 81       	ldd	r24, Y+4	; 0x04
+ 388:	f8 01       	movw	r30, r16
+ 38a:	80 83       	st	Z, r24
+ 38c:	8d 81       	ldd	r24, Y+5	; 0x05
+ 38e:	81 83       	std	Z+1, r24	; 0x01
+				valid = 1;
+                nrf_send_ack(my_id, raw[FROM_ID_BYTE], raw[SEQ_BYTE]);
+ 390:	4b 81       	ldd	r20, Y+3	; 0x03
+ 392:	69 81       	ldd	r22, Y+1	; 0x01
+ 394:	8e 2d       	mov	r24, r14
+ 396:	0e 94 89 01 	call	0x312	; 0x312 <nrf_send_ack>
+		{
+			uint8_t xor = build_xor(raw);
+			if (xor == raw[XOR_BYTE])
+			{
+				for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) data[i] = raw[i+DATA_BYTE];
+				valid = 1;
+ 39a:	81 e0       	ldi	r24, 0x01	; 1
+ 39c:	05 c0       	rjmp	.+10     	; 0x3a8 <nrf_get+0x60>
+    return (0);
+}
+
+uint8_t nrf_get(uint8_t my_id, uint8_t * data)
+{
+	uint8_t valid = 0;
+ 39e:	80 e0       	ldi	r24, 0x00	; 0
+ 3a0:	03 c0       	rjmp	.+6      	; 0x3a8 <nrf_get+0x60>
+ 3a2:	80 e0       	ldi	r24, 0x00	; 0
+ 3a4:	01 c0       	rjmp	.+2      	; 0x3a8 <nrf_get+0x60>
+ 3a6:	80 e0       	ldi	r24, 0x00	; 0
+                nrf_send_ack(my_id, raw[FROM_ID_BYTE], raw[SEQ_BYTE]);
+			}
+		}
+	}
+	return valid;
+}
+ 3a8:	26 96       	adiw	r28, 0x06	; 6
+ 3aa:	0f b6       	in	r0, 0x3f	; 63
+ 3ac:	f8 94       	cli
+ 3ae:	de bf       	out	0x3e, r29	; 62
+ 3b0:	0f be       	out	0x3f, r0	; 63
+ 3b2:	cd bf       	out	0x3d, r28	; 61
+ 3b4:	df 91       	pop	r29
+ 3b6:	cf 91       	pop	r28
+ 3b8:	1f 91       	pop	r17
+ 3ba:	0f 91       	pop	r16
+ 3bc:	ff 90       	pop	r15
+ 3be:	ef 90       	pop	r14
+ 3c0:	08 95       	ret
+
+000003c2 <nrf_send>:
+	for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) raw[i+DATA_BYTE] = data[i];
+    raw[XOR_BYTE] = build_xor(raw);
+}
+
+uint8_t nrf_send(uint8_t from, uint8_t to, uint8_t * data)
+{
+ 3c2:	ff 92       	push	r15
+ 3c4:	0f 93       	push	r16
+ 3c6:	1f 93       	push	r17
+ 3c8:	cf 93       	push	r28
+ 3ca:	df 93       	push	r29
+ 3cc:	00 d0       	rcall	.+0      	; 0x3ce <nrf_send+0xc>
+ 3ce:	00 d0       	rcall	.+0      	; 0x3d0 <nrf_send+0xe>
+ 3d0:	00 d0       	rcall	.+0      	; 0x3d2 <nrf_send+0x10>
+ 3d2:	cd b7       	in	r28, 0x3d	; 61
+ 3d4:	de b7       	in	r29, 0x3e	; 62
+ 3d6:	f8 2e       	mov	r15, r24
+ 3d8:	9a 01       	movw	r18, r20
+    if (tx_seq >= 200) tx_seq = 0;
+ 3da:	80 91 0c 01 	lds	r24, 0x010C
+ 3de:	88 3c       	cpi	r24, 0xC8	; 200
+ 3e0:	10 f0       	brcs	.+4      	; 0x3e6 <nrf_send+0x24>
+ 3e2:	10 92 0c 01 	sts	0x010C, r1
+    uint8_t cur_seq = tx_seq++;
+ 3e6:	40 91 0c 01 	lds	r20, 0x010C
+ 3ea:	81 e0       	ldi	r24, 0x01	; 1
+ 3ec:	84 0f       	add	r24, r20
+ 3ee:	80 93 0c 01 	sts	0x010C, r24
+
+	// build raw packet
+	uint8_t raw[nrf_PAYLOAD];
+    build_nrf_payload(from, to, cur_seq, data, raw);
+ 3f2:	8e 01       	movw	r16, r28
+ 3f4:	0f 5f       	subi	r16, 0xFF	; 255
+ 3f6:	1f 4f       	sbci	r17, 0xFF	; 255
+ 3f8:	8f 2d       	mov	r24, r15
+ 3fa:	0e 94 73 01 	call	0x2e6	; 0x2e6 <build_nrf_payload>
+ 3fe:	1a e0       	ldi	r17, 0x0A	; 10
+	
+    uint8_t ack_n = 0;
+    while (ack_n++ < ACKS_N)
+    {
+        nrf_send_raw(raw);
+ 400:	ce 01       	movw	r24, r28
+ 402:	01 96       	adiw	r24, 0x01	; 1
+ 404:	0e 94 0a 01 	call	0x214	; 0x214 <nrf_send_raw>
+ 408:	87 ea       	ldi	r24, 0xA7	; 167
+ 40a:	91 e6       	ldi	r25, 0x61	; 97
+ 40c:	01 97       	sbiw	r24, 0x01	; 1
+ 40e:	f1 f7       	brne	.-4      	; 0x40c <nrf_send+0x4a>
+ 410:	00 c0       	rjmp	.+0      	; 0x412 <nrf_send+0x50>
+ 412:	00 00       	nop
+        _delay_ms(ACK_WAIT);
+        uint8_t is_ack = 0;
+        if (nrf_get(from, tmp_data))
+ 414:	6f e0       	ldi	r22, 0x0F	; 15
+ 416:	71 e0       	ldi	r23, 0x01	; 1
+ 418:	8f 2d       	mov	r24, r15
+ 41a:	0e 94 a4 01 	call	0x348	; 0x348 <nrf_get>
+ 41e:	11 50       	subi	r17, 0x01	; 1
+	// build raw packet
+	uint8_t raw[nrf_PAYLOAD];
+    build_nrf_payload(from, to, cur_seq, data, raw);
+	
+    uint8_t ack_n = 0;
+    while (ack_n++ < ACKS_N)
+ 420:	79 f7       	brne	.-34     	; 0x400 <nrf_send+0x3e>
+            uint8_t ack_seq = tmp_data[SEQ_BYTE];
+            if ((is_ack) && (cur_seq == ack_seq)) return(1);
+        }
+    }
+    return (0);
+}
+ 422:	80 e0       	ldi	r24, 0x00	; 0
+ 424:	26 96       	adiw	r28, 0x06	; 6
+ 426:	0f b6       	in	r0, 0x3f	; 63
+ 428:	f8 94       	cli
+ 42a:	de bf       	out	0x3e, r29	; 62
+ 42c:	0f be       	out	0x3f, r0	; 63
+ 42e:	cd bf       	out	0x3d, r28	; 61
+ 430:	df 91       	pop	r29
+ 432:	cf 91       	pop	r28
+ 434:	1f 91       	pop	r17
+ 436:	0f 91       	pop	r16
+ 438:	ff 90       	pop	r15
+ 43a:	08 95       	ret
+
+0000043c <spi_init>:
 #define DD_SCK      PB5
 
 void spi_init()
 // Initialize pins for SPI communication
 {
 	DDR_SPI &= ~(1<<DD_MISO);
- 5d6:	24 98       	cbi	0x04, 4	; 4
+ 43c:	24 98       	cbi	0x04, 4	; 4
 	// Define the following pins as output
 	DDR_SPI |= ((1<<DD_MOSI)|(1<<DD_SS)|(1<<DD_SCK));
- 5d8:	84 b1       	in	r24, 0x04	; 4
- 5da:	8c 62       	ori	r24, 0x2C	; 44
- 5dc:	84 b9       	out	0x04, r24	; 4
+ 43e:	84 b1       	in	r24, 0x04	; 4
+ 440:	8c 62       	ori	r24, 0x2C	; 44
+ 442:	84 b9       	out	0x04, r24	; 4
 	PORT_SPI |= (1<<DD_MISO) | (1<<DD_SS);
- 5de:	85 b1       	in	r24, 0x05	; 5
- 5e0:	84 61       	ori	r24, 0x14	; 20
- 5e2:	85 b9       	out	0x05, r24	; 5
+ 444:	85 b1       	in	r24, 0x05	; 5
+ 446:	84 61       	ori	r24, 0x14	; 20
+ 448:	85 b9       	out	0x05, r24	; 5
 	PORT_SPI &= ~((1<<DD_SCK) | (1<<DD_MOSI)) ;
- 5e4:	85 b1       	in	r24, 0x05	; 5
- 5e6:	87 7d       	andi	r24, 0xD7	; 215
- 5e8:	85 b9       	out	0x05, r24	; 5
+ 44a:	85 b1       	in	r24, 0x05	; 5
+ 44c:	87 7d       	andi	r24, 0xD7	; 215
+ 44e:	85 b9       	out	0x05, r24	; 5
 
 	SPCR = ((1<<SPE)|       // SPI Enable
- 5ea:	80 e5       	ldi	r24, 0x50	; 80
- 5ec:	8c bd       	out	0x2c, r24	; 44
+ 450:	80 e5       	ldi	r24, 0x50	; 80
+ 452:	8c bd       	out	0x2c, r24	; 44
 	(1<<MSTR)|              // Master/Slave select
 	(0<<SPR1)|(0<<SPR0)|    // SPI Clock Rate
 	(0<<CPOL)|              // Clock Polarity (0:SCK low / 1:SCK hi when idle)
 	(0<<CPHA));             // Clock Phase (0:leading / 1:trailing edge sampling)
 
 	SPSR = 0; //(1<<SPI2X);              // Double Clock Rate
- 5ee:	1d bc       	out	0x2d, r1	; 45
- 5f0:	08 95       	ret
+ 454:	1d bc       	out	0x2d, r1	; 45
+ 456:	08 95       	ret
 
-000005f2 <spi_transfer_sync>:
+00000458 <spi_transfer_sync>:
 }
 
 void spi_transfer_sync (uint8_t * dataout, uint8_t * datain, uint8_t len)
 // Shift full array through target device
 {
 	for (uint8_t i = 0; i < len; i++) {
- 5f2:	44 23       	and	r20, r20
- 5f4:	81 f0       	breq	.+32     	; 0x616 <spi_transfer_sync+0x24>
- 5f6:	28 2f       	mov	r18, r24
- 5f8:	a6 2f       	mov	r26, r22
- 5fa:	b7 2f       	mov	r27, r23
- 5fc:	e8 2f       	mov	r30, r24
- 5fe:	f9 2f       	mov	r31, r25
+ 458:	44 23       	and	r20, r20
+ 45a:	81 f0       	breq	.+32     	; 0x47c <spi_transfer_sync+0x24>
+ 45c:	28 2f       	mov	r18, r24
+ 45e:	a6 2f       	mov	r26, r22
+ 460:	b7 2f       	mov	r27, r23
+ 462:	e8 2f       	mov	r30, r24
+ 464:	f9 2f       	mov	r31, r25
 		SPDR = dataout[i];
- 600:	81 91       	ld	r24, Z+
- 602:	8e bd       	out	0x2e, r24	; 46
+ 466:	81 91       	ld	r24, Z+
+ 468:	8e bd       	out	0x2e, r24	; 46
 		while((SPSR & (1<<SPIF))==0);
- 604:	0d b4       	in	r0, 0x2d	; 45
- 606:	07 fe       	sbrs	r0, 7
- 608:	fd cf       	rjmp	.-6      	; 0x604 <spi_transfer_sync+0x12>
+ 46a:	0d b4       	in	r0, 0x2d	; 45
+ 46c:	07 fe       	sbrs	r0, 7
+ 46e:	fd cf       	rjmp	.-6      	; 0x46a <spi_transfer_sync+0x12>
 		datain[i] = SPDR;
- 60a:	8e b5       	in	r24, 0x2e	; 46
- 60c:	8d 93       	st	X+, r24
- 60e:	8e 2f       	mov	r24, r30
- 610:	82 1b       	sub	r24, r18
+ 470:	8e b5       	in	r24, 0x2e	; 46
+ 472:	8d 93       	st	X+, r24
+ 474:	8e 2f       	mov	r24, r30
+ 476:	82 1b       	sub	r24, r18
 }
 
 void spi_transfer_sync (uint8_t * dataout, uint8_t * datain, uint8_t len)
 // Shift full array through target device
 {
 	for (uint8_t i = 0; i < len; i++) {
- 612:	84 17       	cp	r24, r20
- 614:	a8 f3       	brcs	.-22     	; 0x600 <spi_transfer_sync+0xe>
- 616:	08 95       	ret
+ 478:	84 17       	cp	r24, r20
+ 47a:	a8 f3       	brcs	.-22     	; 0x466 <spi_transfer_sync+0xe>
+ 47c:	08 95       	ret
 
-00000618 <spi_transmit_sync>:
+0000047e <spi_transmit_sync>:
 }
 
 void spi_transmit_sync (uint8_t * dataout, uint8_t len)
 // Shift full array to target device without receiving any byte
 {
 	for (uint8_t i = 0; i < len; i++) {
- 618:	66 23       	and	r22, r22
- 61a:	61 f0       	breq	.+24     	; 0x634 <spi_transmit_sync+0x1c>
- 61c:	28 2f       	mov	r18, r24
- 61e:	e8 2f       	mov	r30, r24
- 620:	f9 2f       	mov	r31, r25
+ 47e:	66 23       	and	r22, r22
+ 480:	61 f0       	breq	.+24     	; 0x49a <spi_transmit_sync+0x1c>
+ 482:	28 2f       	mov	r18, r24
+ 484:	e8 2f       	mov	r30, r24
+ 486:	f9 2f       	mov	r31, r25
 		SPDR = dataout[i];
- 622:	81 91       	ld	r24, Z+
- 624:	8e bd       	out	0x2e, r24	; 46
+ 488:	81 91       	ld	r24, Z+
+ 48a:	8e bd       	out	0x2e, r24	; 46
 		while((SPSR & (1<<SPIF))==0);
- 626:	0d b4       	in	r0, 0x2d	; 45
- 628:	07 fe       	sbrs	r0, 7
- 62a:	fd cf       	rjmp	.-6      	; 0x626 <spi_transmit_sync+0xe>
- 62c:	8e 2f       	mov	r24, r30
- 62e:	82 1b       	sub	r24, r18
+ 48c:	0d b4       	in	r0, 0x2d	; 45
+ 48e:	07 fe       	sbrs	r0, 7
+ 490:	fd cf       	rjmp	.-6      	; 0x48c <spi_transmit_sync+0xe>
+ 492:	8e 2f       	mov	r24, r30
+ 494:	82 1b       	sub	r24, r18
 }
 
 void spi_transmit_sync (uint8_t * dataout, uint8_t len)
 // Shift full array to target device without receiving any byte
 {
 	for (uint8_t i = 0; i < len; i++) {
- 630:	86 17       	cp	r24, r22
- 632:	b8 f3       	brcs	.-18     	; 0x622 <spi_transmit_sync+0xa>
- 634:	08 95       	ret
+ 496:	86 17       	cp	r24, r22
+ 498:	b8 f3       	brcs	.-18     	; 0x488 <spi_transmit_sync+0xa>
+ 49a:	08 95       	ret
 
-00000636 <spi_fast_shift>:
+0000049c <spi_fast_shift>:
 }
 
 uint8_t spi_fast_shift (uint8_t data)
 // Clocks only one byte to target device and returns the received one
 {
 	SPDR = data;
- 636:	8e bd       	out	0x2e, r24	; 46
+ 49c:	8e bd       	out	0x2e, r24	; 46
 	while((SPSR & (1<<SPIF))==0);
- 638:	0d b4       	in	r0, 0x2d	; 45
- 63a:	07 fe       	sbrs	r0, 7
- 63c:	fd cf       	rjmp	.-6      	; 0x638 <spi_fast_shift+0x2>
+ 49e:	0d b4       	in	r0, 0x2d	; 45
+ 4a0:	07 fe       	sbrs	r0, 7
+ 4a2:	fd cf       	rjmp	.-6      	; 0x49e <spi_fast_shift+0x2>
 	return SPDR;
- 63e:	8e b5       	in	r24, 0x2e	; 46
- 640:	08 95       	ret
+ 4a4:	8e b5       	in	r24, 0x2e	; 46
+ 4a6:	08 95       	ret
 
-00000642 <_exit>:
- 642:	f8 94       	cli
+000004a8 <send_counter>:
+#define LED_DELAY_ERROR (LED_DELAY_OK*3)
 
-00000644 <__stop_program>:
- 644:	ff cf       	rjmp	.-2      	; 0x644 <__stop_program>
+uint8_t clck_count = 0;
+
+uint8_t send_counter(uint8_t clck_count)
+{
+ 4a8:	cf 93       	push	r28
+ 4aa:	df 93       	push	r29
+ 4ac:	00 d0       	rcall	.+0      	; 0x4ae <send_counter+0x6>
+ 4ae:	cd b7       	in	r28, 0x3d	; 61
+ 4b0:	de b7       	in	r29, 0x3e	; 62
+    uint8_t data[DATA_PAYLOAD];
+    for (uint8_t i=0; i<DATA_PAYLOAD ; i++) data[i]=0;
+ 4b2:	1a 82       	std	Y+2, r1	; 0x02
+    data[0] = clck_count;
+ 4b4:	89 83       	std	Y+1, r24	; 0x01
+    if (nrf_send(MY_ID, 1, data)) return 1;
+ 4b6:	ae 01       	movw	r20, r28
+ 4b8:	4f 5f       	subi	r20, 0xFF	; 255
+ 4ba:	5f 4f       	sbci	r21, 0xFF	; 255
+ 4bc:	61 e0       	ldi	r22, 0x01	; 1
+ 4be:	80 e0       	ldi	r24, 0x00	; 0
+ 4c0:	0e 94 e1 01 	call	0x3c2	; 0x3c2 <nrf_send>
+ 4c4:	91 e0       	ldi	r25, 0x01	; 1
+ 4c6:	81 11       	cpse	r24, r1
+ 4c8:	01 c0       	rjmp	.+2      	; 0x4cc <send_counter+0x24>
+ 4ca:	90 e0       	ldi	r25, 0x00	; 0
+    return 0;
+}
+ 4cc:	89 2f       	mov	r24, r25
+ 4ce:	0f 90       	pop	r0
+ 4d0:	0f 90       	pop	r0
+ 4d2:	df 91       	pop	r29
+ 4d4:	cf 91       	pop	r28
+ 4d6:	08 95       	ret
+
+000004d8 <setup_tx>:
+
+void setup_tx()
+{
+	clck_count = 0;
+ 4d8:	10 92 0d 01 	sts	0x010D, r1
+	// init_button();
+	nrf_init();
+ 4dc:	0e 94 56 00 	call	0xac	; 0xac <nrf_init>
+ 4e0:	83 ec       	ldi	r24, 0xC3	; 195
+ 4e2:	99 e0       	ldi	r25, 0x09	; 9
+ 4e4:	01 97       	sbiw	r24, 0x01	; 1
+ 4e6:	f1 f7       	brne	.-4      	; 0x4e4 <setup_tx+0xc>
+ 4e8:	00 c0       	rjmp	.+0      	; 0x4ea <setup_tx+0x12>
+ 4ea:	00 00       	nop
+	_delay_ms(10);
+	nrf_config(1);
+ 4ec:	81 e0       	ldi	r24, 0x01	; 1
+ 4ee:	0e 94 ba 00 	call	0x174	; 0x174 <nrf_config>
+	DDRC |= (1<<PC0);
+ 4f2:	38 9a       	sbi	0x07, 0	; 7
+	PORTC &= ~(1<<PC0);
+ 4f4:	40 98       	cbi	0x08, 0	; 8
+		poweroff_led();
+	}
+    */
+
+    // Interrupt pin
+    DDRD &= ~(1<<PD2); // INT0
+ 4f6:	52 98       	cbi	0x0a, 2	; 10
+    PORTD |= (1<<PD2); // Set HIGH
+ 4f8:	5a 9a       	sbi	0x0b, 2	; 11
+    EICRA |= (1<<ISC01); // Wake on LOW
+ 4fa:	e9 e6       	ldi	r30, 0x69	; 105
+ 4fc:	f0 e0       	ldi	r31, 0x00	; 0
+ 4fe:	80 81       	ld	r24, Z
+ 500:	82 60       	ori	r24, 0x02	; 2
+ 502:	80 83       	st	Z, r24
+
+    // Sleep mode
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+ 504:	83 b7       	in	r24, 0x33	; 51
+ 506:	81 7f       	andi	r24, 0xF1	; 241
+ 508:	84 60       	ori	r24, 0x04	; 4
+ 50a:	83 bf       	out	0x33, r24	; 51
+
+    // LED
+    LED_DDR |= (1<<LED_PIN);
+ 50c:	38 9a       	sbi	0x07, 0	; 7
+    LED_PORT &= ~(1<<LED_PIN);
+ 50e:	40 98       	cbi	0x08, 0	; 8
+
+    sei();
+ 510:	78 94       	sei
+ 512:	08 95       	ret
+
+00000514 <power_down>:
+}
+
+void power_down()
+{
+    nrf_powerdown();
+ 514:	0e 94 62 01 	call	0x2c4	; 0x2c4 <nrf_powerdown>
+    EIMSK |= (1<<INT0); // INT0 enable
+ 518:	e8 9a       	sbi	0x1d, 0	; 29
+    LED_PORT &= ~(1<<LED_PIN);
+ 51a:	40 98       	cbi	0x08, 0	; 8
+    EIFR |= (1<<INTF0); // clear flag
+ 51c:	e0 9a       	sbi	0x1c, 0	; 28
+    sei();
+ 51e:	78 94       	sei
+    sleep_mode();
+ 520:	83 b7       	in	r24, 0x33	; 51
+ 522:	81 60       	ori	r24, 0x01	; 1
+ 524:	83 bf       	out	0x33, r24	; 51
+ 526:	88 95       	sleep
+ 528:	83 b7       	in	r24, 0x33	; 51
+ 52a:	8e 7f       	andi	r24, 0xFE	; 254
+ 52c:	83 bf       	out	0x33, r24	; 51
+ 52e:	08 95       	ret
+
+00000530 <__vector_1>:
+}
+
+ISR(INT0_vect) // wake up on click (INT0)
+{
+ 530:	1f 92       	push	r1
+ 532:	0f 92       	push	r0
+ 534:	0f b6       	in	r0, 0x3f	; 63
+ 536:	0f 92       	push	r0
+ 538:	11 24       	eor	r1, r1
+ 53a:	2f 93       	push	r18
+ 53c:	3f 93       	push	r19
+ 53e:	4f 93       	push	r20
+ 540:	5f 93       	push	r21
+ 542:	6f 93       	push	r22
+ 544:	7f 93       	push	r23
+ 546:	8f 93       	push	r24
+ 548:	9f 93       	push	r25
+ 54a:	af 93       	push	r26
+ 54c:	bf 93       	push	r27
+ 54e:	ef 93       	push	r30
+ 550:	ff 93       	push	r31
+    EIMSK &= ~(1<<INT0); // INT0 disable
+ 552:	e8 98       	cbi	0x1d, 0	; 29
+    if (send_counter(clck_count++)) // If success
+ 554:	80 91 0d 01 	lds	r24, 0x010D
+ 558:	91 e0       	ldi	r25, 0x01	; 1
+ 55a:	98 0f       	add	r25, r24
+ 55c:	90 93 0d 01 	sts	0x010D, r25
+ 560:	0e 94 54 02 	call	0x4a8	; 0x4a8 <send_counter>
+ 564:	88 23       	and	r24, r24
+ 566:	b9 f0       	breq	.+46     	; 0x596 <__vector_1+0x66>
+    { // blink twice
+        LED_PORT |= (1<<LED_PIN);
+ 568:	40 9a       	sbi	0x08, 0	; 8
+ 56a:	87 ea       	ldi	r24, 0xA7	; 167
+ 56c:	91 e6       	ldi	r25, 0x61	; 97
+ 56e:	01 97       	sbiw	r24, 0x01	; 1
+ 570:	f1 f7       	brne	.-4      	; 0x56e <__vector_1+0x3e>
+ 572:	00 c0       	rjmp	.+0      	; 0x574 <__vector_1+0x44>
+ 574:	00 00       	nop
+        _delay_ms(LED_DELAY_OK);
+        LED_PORT &= ~(1<<LED_PIN);
+ 576:	40 98       	cbi	0x08, 0	; 8
+ 578:	87 ea       	ldi	r24, 0xA7	; 167
+ 57a:	91 e6       	ldi	r25, 0x61	; 97
+ 57c:	01 97       	sbiw	r24, 0x01	; 1
+ 57e:	f1 f7       	brne	.-4      	; 0x57c <__vector_1+0x4c>
+ 580:	00 c0       	rjmp	.+0      	; 0x582 <__vector_1+0x52>
+ 582:	00 00       	nop
+        _delay_ms(LED_DELAY_OK);
+        LED_PORT |= (1<<LED_PIN);
+ 584:	40 9a       	sbi	0x08, 0	; 8
+ 586:	87 ea       	ldi	r24, 0xA7	; 167
+ 588:	91 e6       	ldi	r25, 0x61	; 97
+ 58a:	01 97       	sbiw	r24, 0x01	; 1
+ 58c:	f1 f7       	brne	.-4      	; 0x58a <__vector_1+0x5a>
+ 58e:	00 c0       	rjmp	.+0      	; 0x590 <__vector_1+0x60>
+ 590:	00 00       	nop
+        _delay_ms(LED_DELAY_OK);
+        LED_PORT &= ~(1<<LED_PIN);
+ 592:	40 98       	cbi	0x08, 0	; 8
+ 594:	0b c0       	rjmp	.+22     	; 0x5ac <__vector_1+0x7c>
+    } else { // if failed long blink
+        LED_PORT |= (1<<LED_PIN);
+ 596:	40 9a       	sbi	0x08, 0	; 8
+ 598:	9f e5       	ldi	r25, 0x5F	; 95
+ 59a:	2a ee       	ldi	r18, 0xEA	; 234
+ 59c:	80 e0       	ldi	r24, 0x00	; 0
+ 59e:	91 50       	subi	r25, 0x01	; 1
+ 5a0:	20 40       	sbci	r18, 0x00	; 0
+ 5a2:	80 40       	sbci	r24, 0x00	; 0
+ 5a4:	e1 f7       	brne	.-8      	; 0x59e <__vector_1+0x6e>
+ 5a6:	00 c0       	rjmp	.+0      	; 0x5a8 <__vector_1+0x78>
+ 5a8:	00 00       	nop
+        _delay_ms(LED_DELAY_ERROR);
+        LED_PORT &= ~(1<<LED_PIN);
+ 5aa:	40 98       	cbi	0x08, 0	; 8
+    }
+
+    power_down();
+ 5ac:	0e 94 8a 02 	call	0x514	; 0x514 <power_down>
+}
+ 5b0:	ff 91       	pop	r31
+ 5b2:	ef 91       	pop	r30
+ 5b4:	bf 91       	pop	r27
+ 5b6:	af 91       	pop	r26
+ 5b8:	9f 91       	pop	r25
+ 5ba:	8f 91       	pop	r24
+ 5bc:	7f 91       	pop	r23
+ 5be:	6f 91       	pop	r22
+ 5c0:	5f 91       	pop	r21
+ 5c2:	4f 91       	pop	r20
+ 5c4:	3f 91       	pop	r19
+ 5c6:	2f 91       	pop	r18
+ 5c8:	0f 90       	pop	r0
+ 5ca:	0f be       	out	0x3f, r0	; 63
+ 5cc:	0f 90       	pop	r0
+ 5ce:	1f 90       	pop	r1
+ 5d0:	18 95       	reti
+
+000005d2 <main_tx>:
+
+int main_tx(void) {setup_tx(); power_down(); while(1);  return(0);}
+ 5d2:	0e 94 6c 02 	call	0x4d8	; 0x4d8 <setup_tx>
+ 5d6:	0e 94 8a 02 	call	0x514	; 0x514 <power_down>
+ 5da:	ff cf       	rjmp	.-2      	; 0x5da <main_tx+0x8>
+
+000005dc <_exit>:
+ 5dc:	f8 94       	cli
+
+000005de <__stop_program>:
+ 5de:	ff cf       	rjmp	.-2      	; 0x5de <__stop_program>

@@ -18,5 +18,3 @@ spi\spi.c
 
 tx\nrf_ping_TX.c
 
-tx\tx.c
-
