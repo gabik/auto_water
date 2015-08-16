@@ -16,8 +16,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define MY_ID 1 // Reciever #1
-	
 uint16_t count;
 uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
 
@@ -28,9 +26,8 @@ void setup_rx()
  	nrf_config(0);
 	init_button();
 	led_screen_init();
-	DDRC |= (1<<PC0);
-	PORTC &= ~(1<<PC0);
 	count = 0;
+    /*
 	uint8_t reg_val1, val1=0, val2=0;
 	uint8_t reg_val5[5];
 	for (uint8_t i=0 ; i<=0x17 ; i+=2)
@@ -51,6 +48,7 @@ void setup_rx()
 		write_to_led_hex(val1, val2, 400);		
 		poweroff_led();
 	}
+    */
 }
 
 void loop_rx()

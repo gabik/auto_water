@@ -189,3 +189,8 @@ void nrf_send_raw(uint8_t * value)
 	PORTC&=~(1<<PC0);
 	nrf_CSN_hi;
 }
+
+void nrf_powerdown()
+{
+    POWERDN;
+}
