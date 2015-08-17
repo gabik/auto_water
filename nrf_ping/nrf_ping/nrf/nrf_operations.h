@@ -26,10 +26,14 @@
 #define LED_PIN PC0
 #define LED_DELAY_SEND 50
 
+#define ACK_WAIT (100-LED_DELAY_SEND)
+#define ACKS_N 10
+
 void build_nrf_payload(uint8_t from, uint8_t to, uint8_t seq, uint8_t * data, uint8_t * raw);
 void nrf_send_ack(uint8_t from, uint8_t to, uint8_t seq);
 uint8_t nrf_send(uint8_t from, uint8_t to, uint8_t * data);
 uint8_t nrf_get(uint8_t my_id, uint8_t * data);
+uint8_t nrf_get_ack(uint8_t my_id, uint8_t * data, uint8_t * seq);
 uint8_t build_xor(uint8_t * data);
 
 #endif /* NRF_OPERATIONS_H_ */

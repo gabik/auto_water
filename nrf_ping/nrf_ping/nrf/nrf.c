@@ -184,9 +184,6 @@ void nrf_send_raw(uint8_t * value)
 	nrf_CE_hi;
 	_delay_us(150);
 	
-	PORTC|=(1<<PC0);
-	_delay_ms(100);
-	PORTC&=~(1<<PC0);
 	nrf_CSN_hi;
 }
 
