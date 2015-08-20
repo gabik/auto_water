@@ -189,5 +189,15 @@ void nrf_send_raw(uint8_t * value)
 
 void nrf_powerdown()
 {
+	nrf_CE_lo;
     POWERDN;
+}
+
+void nrf_listen()
+{
+	RX_POWERUP;
+	RESET_STT;
+	nrf_flush();
+	nrf_CE_hi;
+	_delay_us(150);
 }

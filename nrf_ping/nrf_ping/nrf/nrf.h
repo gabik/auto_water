@@ -45,6 +45,7 @@ extern void		nrf_read_register(uint8_t reg, uint8_t * value, uint8_t len);
 extern void		nrf_write_register(uint8_t reg, uint8_t * value, uint8_t len);
 extern void		nrf_write_register_1(uint8_t reg, uint8_t value);
 void nrf_powerdown();
+void nrf_listen();
 uint8_t nrf24l01_readregister(uint8_t reg);
 
 #endif /* NRF_H_ */

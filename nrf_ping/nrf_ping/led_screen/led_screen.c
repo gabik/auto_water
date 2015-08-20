@@ -24,7 +24,7 @@ void led_screen_init()
 void poweroff_led()
 {
 	_delay_ms(1);
-	SEGMENTS_PORT = 0xFF; // + to cathode to power off
+	SEGMENTS_PORT = 0; 
 	LED_SELECT_PORT &= ~((1<<LED0) | (1<<LED1) | (1<<LED2) | (1<<LED3)); // 0 to LED ports (0 to Anode)
 }
 
