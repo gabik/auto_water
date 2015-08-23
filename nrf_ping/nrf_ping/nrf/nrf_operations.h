@@ -35,5 +35,6 @@ uint8_t nrf_send(uint8_t from, uint8_t to, uint8_t * data);
 uint8_t nrf_get(uint8_t my_id, uint8_t * data);
 uint8_t nrf_get_ack(uint8_t my_id, uint8_t * data, uint8_t * seq);
 uint8_t build_xor(uint8_t * data);
+uint8_t nrf_is_working();
 
 #endif /* NRF_OPERATIONS_H_ */

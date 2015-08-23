@@ -23,7 +23,16 @@
 uint16_t count;
 uint8_t data[DATA_PAYLOAD]; // Declare the data buffer
 
-volatile uint16_t timer0_counter, timer0_limit;
+volatile uint16_t timer0_counter;
+volatile uint16_t timer0_limit;
+
+void wdt_start()
+{
+	MCUSR = 0;
+	WDTCSR = (1<<WDCE) | (1<<WDE);
+	WDTCSR = (1<<WDIE) | (1<<WDP2) | (1<<WDP0);	
+	wdt_reset();
+}
 
 void setup_rx()
 {
@@ -33,15 +42,13 @@ void setup_rx()
  	nrf_init();
  	_delay_ms(10);
  	nrf_config(0);
-	init_button();
 	led_screen_init();
 	count = 0;
-	MCUSR = 0;
-	WDTCSR = (1<<WDCE) | (1<<WDE);
-	WDTCSR = (1<<WDIE) | (1<<WDP2) | (1<<WDP0);
+	wdt_start();
 	sei();
 	set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 	sleep_enable();
+	goto_sleep();
     /*
 	uint8_t reg_val1, val1=0, val2=0;
 	uint8_t reg_val5[5];
@@ -71,7 +78,8 @@ void goto_sleep()
 	timer0_stop();
 	nrf_powerdown();
 	poweroff_led();
-	wdt_reset();
+	ADCSRA = 0;
+	wdt_start();
 	sei();
 	sleep_cpu();	
 }
@@ -79,8 +87,12 @@ void goto_sleep()
 ISR(TIMER0_COMPA_vect)
 {
 	timer0_counter++;
-	if (timer0_counter == timer0_limit)
-	{ goto_sleep(); }
+	if (timer0_counter >= timer0_limit) 
+	{
+		timer0_stop();
+		while (nrf_is_working());
+		goto_sleep();
+	}
 }
 
 void timer0_init(uint16_t max)
@@ -89,16 +101,17 @@ void timer0_init(uint16_t max)
 	timer0_counter = 0;
 	TCNT0 = 0;
 	TCCR0A |= (1<<WGM01); // CTC
-	TCCR0B |= (1 << CS11) | (1<<CS10); // 1M / 1024
+	TCCR0B |= (1 << CS02) | (1<<CS00); // 1M / 1024
 	OCR0A = 10; // (1000000 / 1024) = 976hz. we want every 10ms, so (1/976)*1000=1.02459ms, 10ms/1.02459 = 9.76. 10 will give 10.25ms, we will take it.
 	TIMSK0 |= (1<<OCIE0A);
+	sei();
 }
 
 void timer0_stop()
 {
 	TIMSK0 = 0;
 	TCCR0A = 0;
-	TCCR0B = 0;	
+	TCCR0B = 0;
 }
 
 void handle_got_data(uint8_t * data)
@@ -111,12 +124,13 @@ void handle_got_data(uint8_t * data)
 
 ISR(WDT_vect)
 {
+	wdt_disable();
 	timer0_init(12); //120 / 10 (my prescaler) = 12 (~123ms)
 	nrf_listen();
 	LED_PORT |= (1<<LED_PIN);
 	_delay_us(100);
 	LED_PORT &= ~(1<<LED_PIN);
-	while (!nrf_get(MY_ID, data)); // loop till we get data (if timer0 will fire comp0A , powerdown)
+	while (!nrf_get(MY_ID, data)) _delay_us(100); // loop till we get data (if timer0 will fire comp0A , powerdown)
 	handle_got_data(data);
 }
 

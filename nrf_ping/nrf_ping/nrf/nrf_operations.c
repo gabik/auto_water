@@ -19,6 +19,8 @@
 uint8_t tx_seq = 0;
 uint8_t MY_ACK = 0b10000001;
 
+volatile uint8_t working = 0;
+
 void nrf_send_ack(uint8_t from, uint8_t to, uint8_t seq)
 {
 	uint8_t raw[nrf_PAYLOAD];
@@ -26,7 +28,8 @@ void nrf_send_ack(uint8_t from, uint8_t to, uint8_t seq)
 	for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) data_ack[i] = MY_ACK;
 	build_nrf_payload(from, to, seq, data_ack, raw);
 	nrf_send_raw(raw);
-	// for (uint8_t i =0;i<nrf_PAYLOAD;i+=2) write_to_led_hex(raw[i], raw[i+1], 1000);
+	write_to_led_hex(raw[0], raw[1], 12);
+	//for (uint8_t i =0;i<nrf_PAYLOAD;i+=2) write_to_led_hex(raw[i], raw[i+1], 1000);
 }
 
 uint8_t build_xor(uint8_t * data)
@@ -83,6 +86,7 @@ uint8_t nrf_send(uint8_t from, uint8_t to, uint8_t * data)
 
 uint8_t nrf_get(uint8_t my_id, uint8_t * data)
 {
+	working = 1;
 	uint8_t valid = 0;
 	
 	// Check if we have data 
@@ -97,14 +101,19 @@ uint8_t nrf_get(uint8_t my_id, uint8_t * data)
 			{
 				for (uint8_t i=0 ; i<DATA_PAYLOAD ; i++) data[i] = raw[i+DATA_BYTE];
 				valid = 1;
-				_delay_ms(1);
+				_delay_us(500);
                 nrf_send_ack(my_id, raw[FROM_ID_BYTE], raw[SEQ_BYTE]);
 			}
 		}
 	}
+	working = 0;
 	return valid;
 }
 
+uint8_t nrf_is_working()
+{
+	return working;
+}
 
 uint8_t nrf_get_ack(uint8_t my_id, uint8_t * data, uint8_t * seq)
 {
