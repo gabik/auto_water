@@ -148,6 +148,9 @@ void setup()
 	//CLKPR=(1<<CLKPCE);
 	//CLKPR=4;   // CLKPS[3:0] = 1000
 
+    // Disable and clear all Watchdog settings. Nice to get a clean slate when dealing with interrupts 
+    WDTCR = (1<<WDCE)|(1<<WDE);
+    WDTCR = 0;
 	// Setup watchdog for sleeping.
 	// Counter to 0,
 	// register WDTCR bits WDP[3:0] to 1001 => 128Khz/1024K = 1/0.125 [8 sec]
@@ -157,7 +160,6 @@ void setup()
 	WDTCR &= ~(1<<WDP2);
 	WDTCR &= ~(1<<WDP1);
 	WDTCR |= (1<<WDIE);
-	WDTCR &= ~(1<<WDE);
 
 	// Set sleep mode to POWER DOWN
 	MCUCR |= (1 << SM1);
@@ -173,6 +175,8 @@ void setup()
 // watchdog interrupt
 ISR(WDT_vect) {
   watchdog_counter++;
+  // WD disable the interupts flag each time, we need to enable it.
+  WDTCR |= (1<<WDIE);
 }
 
 int main(void)
@@ -186,26 +190,27 @@ int main(void)
 			// Check if we have water on bucket
 			if (get_level())
 			{
+                // Led off
+				PORTB &= ~(1<<POUT_LED);
 				setup_adc(); //Enable ADC and output ports once I am up
 				// Check if need to water soil and on/off pump
 				if (get_adc_val(PIN_POT) > get_adc_val(PIN_SOIL))
 				{
-					// PUMP as GPIO output and set to on, wait and off
+					// PUMP as GPIO output and set to on
 					DDRB |= (1<<POUT_PUMP);
 					PORTB |= (1<<POUT_PUMP);
-					delay_seconds(WATER_PUMP_SECONDS);
-					PORTB &= ~(1<<POUT_PUMP);
-				}
+				} else {
+                    // Pump off
+                    PORTB &= ~(1<<POUT_PUMP);
+                }
 			}
 			else
 			{
 				// No water - LED for 10 seconds
 				// LED as GPIO output and set to off
 				DDRB |= (1<<POUT_LED);
-				// LED on, wait , off
+				// LED on
 				PORTB |= (1<<POUT_LED);
-				delay_seconds(WATER_PUMP_SECONDS);
-				PORTB &= ~(1<<POUT_LED);
 			}
     	}
     	sleep_me();
