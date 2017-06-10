@@ -127,6 +127,8 @@ bool get_level()
 void sleep_me(uint8_t sec)
 {
 	ADCSRA &= ~(1<<ADEN); //Disable ADC, saves ~230uA
+	ACSR &= ~(1<<ACD); // Disable AD comperator
+	// BOD disable (anyway, I should disable it from FUSE)
 
 	// Set LED and PUMP as input to save power
 	DDRB &= ~(1<<POUT_LED);
